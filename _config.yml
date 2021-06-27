@@ -21,7 +21,7 @@ title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "rlawjdghek"
 description              : "거대한 메모장"
-url                      : "https://rlawjdghek_big_memo.com"# the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : "https://rlawjdghek.github.io"# the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
@@ -98,7 +98,7 @@ author:
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "DASH-LAB"
   location         : "Suwon"
-  email            : "rlawjdghek@skku.edu
+  email            : "rlawjdghek@skku.edu"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
