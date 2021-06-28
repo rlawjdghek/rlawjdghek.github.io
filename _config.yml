@@ -95,7 +95,7 @@ analytics:
 # Site Author
 author:
   name             : "거대한 메모장"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/profile.jpg"# path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "DASH-LAB"
   location         : "South Korea"
   email            : "rlawjdghek@skku.edu"

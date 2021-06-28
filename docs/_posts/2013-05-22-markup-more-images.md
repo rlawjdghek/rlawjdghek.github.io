@@ -48,9 +48,9 @@ Apply the `third` class like so to display three images side by side that share 
 
 ```html
 <figure class="third">
-	<img src="/images/image-filename-1.jpg">
-	<img src="/images/image-filename-2.jpg">
-	<img src="/images/image-filename-3.jpg">
+	<img src="/assets/images/image-filename-1.jpg">
+	<img src="/assets/images/image-filename-2.jpg">
+	<img src="/assets/images/image-filename-3.jpg">
 	<figcaption>Caption describing these three images.</figcaption>
 </figure>
 ```

@@ -6,6 +6,10 @@ categories:
   
 tags:
   - configuration
+  
+toc: true
+toc_sticky: true
+toc_label: "On this page"
     
 last_modified_at: 2021-06-28T10:48:00-05:00
 ---
@@ -74,7 +78,7 @@ jt -l
 ```
 을 활용하여 어느 테마를 적용할 수 있는지 리스트 보여주기.
 
-![jupytertheme command](/images/2021-06-28_jupyter_config/jupytertheme_command.JPG)
+![jupytertheme command](/assets/images/2021-06-28_jupyter_config/jupytertheme_command.JPG)
 
 내 주 설정은 
 ```bash
