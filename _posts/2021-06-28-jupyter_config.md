@@ -74,7 +74,7 @@ jt -l
 ```
 을 활용하여 어느 테마를 적용할 수 있는지 리스트 보여주기.
 
-![asdasd](/assets/_figs/2021-06-28-jupyter_config/jupytertheme_command.jpg)
+![jupytertheme command](/images/jupytertheme_command.JPG)
 
 
 
