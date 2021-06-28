@@ -74,9 +74,13 @@ jt -l
 ```
 을 활용하여 어느 테마를 적용할 수 있는지 리스트 보여주기.
 
-![jupytertheme command](/images/jupytertheme_command.JPG)
+![jupytertheme command](/images/2021-06-28_jupyter_config/jupytertheme_command.JPG)
 
-
+내 주 설정은 
+```bash
+jt -t gruvboxd -N -kl -f roboto -fs 11 -nfs 11 -tfs 11 -ofs 11 -cellw 80% -lineh 130 -cursc r -cursw 1
+```
+ 
 
 
 
