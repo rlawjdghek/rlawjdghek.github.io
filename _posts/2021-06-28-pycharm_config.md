@@ -2,10 +2,10 @@
 title:  "파이참 기본 설정 및 기록들"
 
 categories:
-  - 환경설정
+  - configuration
   
 tags:
-  - 환경설정
+  - configuration
 
 last_modified_at: 2021-06-28T10:48:00-05:00
 ---
