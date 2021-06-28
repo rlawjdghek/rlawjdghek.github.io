@@ -1,6 +1,6 @@
 ---
-title:  "파이참 기본 설정 및 기록들"
-
+title:  "파이참 환경설정"
+excerpt: "파이참 기본 설정 및 기록들"
 categories:
   - configuration
   

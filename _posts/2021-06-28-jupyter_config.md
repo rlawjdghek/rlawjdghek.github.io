@@ -1,6 +1,6 @@
 ---
 title:  "주피터 환경설정"
-
+excerpt: "주피터 커널 추가, 삭제, config 설정, 테마적용"
 categories:
   - configuration
   
@@ -14,12 +14,12 @@ last_modified_at: 2021-06-28T10:48:00-05:00
 \* 2021-03-26: 주피터 랩보다 주피터 노트북이 개인적으로 더 좋은 것 같다. extension이 활성화가 잘 되어있어서
 주피터 랩 이상의 기능들이 내재되어있다. (아래에서 주로 쓰는 설정 예시 확인)
 
-1. 설치
+### 1. 설치
 ```bash
 conda install jupyter notebook
 ```
 
-2. nbextension 설치 & 설정
+### 2. nbextension 설치 & 설정
 ```bash
 conda install -c conda-forge jupyter_contrib_nbextentions
 ```
@@ -37,7 +37,7 @@ jupyter contrib nbextention install
 2-4. ScollDown: 출력이 길어질 때 자동으로 닫을 수 있다. 
 
 
-3. config파일 설정 (컴퓨터 하나당 한번 만 하면 된다.)
+### 3. config파일 설정 (컴퓨터 하나당 한번 만 하면 된다.)
 ```bash
 jupyter notebook --generate-config
 ```
@@ -64,7 +64,7 @@ python -m ipykernel install --user --name rlawjdghek --display-name "rlawjdghek"
 jupyter kernelspec uninstall rlawjdghek
 ```
 
-4. 테마 및 폰트 조절
+### 4. 테마 및 폰트 조절
 ```bash
 pip install jupyterthemes
 ```
