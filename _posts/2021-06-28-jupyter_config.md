@@ -25,12 +25,12 @@ conda install jupyter notebook
 
 ### 2. nbextension 설치 & 설정
 ```bash
-conda install -c conda-forge jupyter_contrib_nbextentions
+conda install -c conda-forge jupyter_contrib_nbextensions
 ```
 
 \+ 원도우는 아래 명렁어도 추가로 해줘야 한다. 
 ```bash
-jupyter contrib nbextention install
+jupyter contrib nbextension install
 ```
 
 주피터 노트북 가장 오른쪽 탭 nbextention에 들어가서 4가지 기능 체크
