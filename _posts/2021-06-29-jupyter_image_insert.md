@@ -11,7 +11,7 @@ toc: true
 toc_sticky: true
 toc_label: "On this page"
     
-last_modified_at: 2021-06-28T10:48:00-05:00
+last_modified_at: 2021-06-29T23:48:00-05:00
 ---
 
 **마크다운으로 넣는걸 추천한다. 왜냐하면 코드 쉘 모드는 from PIL import Image와 겹쳐 오류가 발생 할 수 있다.**
