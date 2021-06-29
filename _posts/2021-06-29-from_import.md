@@ -11,7 +11,7 @@ toc: true
 toc_sticky: true
 toc_label: "On this page"
     
-last_modified_at: 2021-06-28T10:48:00-05:00
+last_modified_at: 2021-06-29T10:48:00-05:00
 ---
 
 main.py가 메인으로 돌릴 파일이면, 같은 폴더의 다른 파일 asdasd.py에서 os.getcwd()를 출력하라고 하면 당연히 ./main.py가 나온다. 

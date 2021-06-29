@@ -11,7 +11,7 @@ toc: true
 toc_sticky: true
 toc_label: "On this page"
     
-last_modified_at: 2021-06-28T10:48:00-05:00
+last_modified_at: 2021-06-29T10:48:00-05:00
 ---
 
 ### classmethod vs self
