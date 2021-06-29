@@ -17,7 +17,7 @@ last_modified_at: 2021-06-29T10:48:00-05:00
 main.py가 메인으로 돌릴 파일이면, 같은 폴더의 다른 파일 asdasd.py에서 os.getcwd()를 출력하라고 하면 당연히 ./main.py가 나온다. 
 따라서 내가 model.py에서 모델의 경로를 ./save_model/model.pth를 주었을때 실제 이 경로는 main.py를 상대위치로 잡아 main.py와 같은 
 폴더에 있는 폴더 save_model의 model.pth가 있는지 찾는다. 따라서 model.py가 다른 위치에 있다고 하더라도 이 경우에는 model.py가 위치한
-폴더에 save_model을 만드는 것이 아니라는 것을 염두하자. 
+폴더에 save_model을 만드는 것이 아니라는 것을 염두하자.
 
 반면, 
 
