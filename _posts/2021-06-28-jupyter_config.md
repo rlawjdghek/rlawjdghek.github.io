@@ -58,7 +58,7 @@ c.NotebookApp.port = 8890
 ```
 
 가상환경을 커널에 추가
-```bash
+```s
 pip install ipykernel
 python -m ipykernel install --user --name rlawjdghek --display-name "rlawjdghek"
 ```
