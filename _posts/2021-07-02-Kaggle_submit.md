@@ -2,10 +2,10 @@
 title:  "Kaggle Submit"
 excerpt: "캐글 서브밋 하는법"
 categories:
-  - Docker
+  - Kaggle
   
 tags:
-  - Docker
+  - Kaggle
   
 toc: true
 toc_sticky: true
