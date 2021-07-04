@@ -2,10 +2,10 @@
 title:  "넘파이 행렬, tensor 곱"
 excerpt: "넘파이 차원별로 정리"
 categories:
-  - Window
+  - Numpy
   
 tags:
-  - Window
+  - Numpy
   
 toc: true
 toc_sticky: true
