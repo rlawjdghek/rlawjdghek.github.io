@@ -1,6 +1,6 @@
 ---
-title:  "(2020 카카오 인턴십) 보석 쇼핑""
-excerpt: "(2020 카카오 인턴십 보석 쇼핑"
+title:  "(2020 카카오 인턴십) 보석 쇼핑"
+excerpt: "(2020 카카오 인턴십) 보석 쇼핑"
 categories:
   - Algorithm
   
