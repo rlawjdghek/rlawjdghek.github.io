@@ -12,7 +12,7 @@ toc_sticky: true
 toc_label: "On this page"
 use_math: true
     
-last_modified_at: 2021-07-06612:48:00-05:00
+last_modified_at: 2021-07-06T12:48:00-05:00
 ---
 
 아래 그림은 SoftmaxGAN의 그래프이다. 이대로 구현 하면 되는데 이전의 GAN들과 다른점은 Generator를 훈련시키기 위해 real logit도 사용한다는 점이다.

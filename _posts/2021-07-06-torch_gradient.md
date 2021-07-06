@@ -12,7 +12,7 @@ toc_sticky: true
 toc_label: "On this page"
 use_math: true
     
-last_modified_at: 2021-07-06612:48:00-05:00
+last_modified_at: 2021-07-06T12:48:00-05:00
 ---
 
 먼저 gradient를 할때에 주의할 점.
