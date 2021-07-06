@@ -1,0 +1,50 @@
+---
+title:  "loss.backward 원리 메모"
+excerpt: "retain graph=True의 필요성 & GAN 학습할때"
+categories:
+  - Pytorch & Tensorflow & Coding
+  
+tags:
+  - pytorch
+  
+toc: true
+toc_sticky: true
+toc_label: "On this page"
+use_math: true
+    
+last_modified_at: 2021-07-06T14:48:00-05:00
+---
+아래 코드 참조용.
+
+##### jupyter 환경
+```python
+from tqdm.notebook import tqdm
+```
+
+##### pycharm
+```python
+from tqdm import tqdm
+```
+
+```python
+for epoch in range(NUM_EPOCHS):
+    train_loss = 0
+    val_loss = 0
+    train_corrects = 0
+    val_corrects = 0
+    
+    train_loop = tqdm(enumerate(train_loader), total=len(train_loader), leave=False)
+    for iter_, (img, label) in train_loop:
+        preds_logit = model(img)
+        loss = criterion(preds_logit, label)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        _, preds_label = torch.max(preds_logit, 1)
+        train_corrects += torch.sum(preds_label == label).item()
+        
+        train_loop.set_description("Epoch: [{}/{}]".format(epoch, NUM_EPOCHS))
+        train_loop.set_postfix(loss=loss.item(), acc=train_corrects/((iter_+1) * BATCH_SIZE))
+```
+

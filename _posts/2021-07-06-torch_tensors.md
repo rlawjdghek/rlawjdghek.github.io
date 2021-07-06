@@ -1,6 +1,6 @@
 ---
-title:  "loss.backward 원리 메모"
-excerpt: "retain graph=True의 필요성 & GAN 학습할때"
+title:  "Torch tensors"
+excerpt: "torch.Tensor, torch.tensor, torch.autograd.Variable"
 categories:
   - Pytorch & Tensorflow & Coding
   
