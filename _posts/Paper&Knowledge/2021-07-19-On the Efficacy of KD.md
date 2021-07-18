@@ -1,6 +1,6 @@
 ---
-title:  "[ICCV]On the Efficacy of Knowledge Distillation"
-excerpt: "[ICCV]On the Efficacy of Knowledge Distillation"
+title:  "[ICCV2019]On the Efficacy of Knowledge Distillation"
+excerpt: "[ICCV2019]On the Efficacy of Knowledge Distillation"
 categories:
   - Paper & Knowledge
   
