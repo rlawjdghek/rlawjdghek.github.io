@@ -60,8 +60,8 @@ train_dataset = torchvision.datasets.CIFAR100(root="./data", download=True, tran
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=128)
 
 
-model = torchvision.models.resnet101(pretrained=False).cuda()
-model = torch.nn.DataParallel(model)
+model = torchvision.models.resnet101(pretrained=False)
+model = torch.nn.DataParallel(model).cuda()
 optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 criterion = torch.nn.CrossEntropyLoss()
 
