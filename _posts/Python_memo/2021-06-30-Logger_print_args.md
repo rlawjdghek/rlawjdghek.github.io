@@ -1,5 +1,5 @@
 ---
-title:  "Logger"
+title:  "Logger, print_args"
 excerpt: "Logger 적극 활용. 모든것을 기록해두자."
 categories:
   - python memo
@@ -64,3 +64,13 @@ for iter, data in enumerate(train_loader):
         logger.write("error msg write")
 ```
 와 같이 진행상황은 무시되지만 콘솔에서는 볼 수 있는 코드를 사용할 수 있다. 
+
++ 2021-07-27: print_args도 많이 써서 기록해 둔다.
+```python
+def print_args(args, logger=None):
+    for k, v in vars(args).items():
+        if logger is not None:
+            logger.write('{:25s}: {}\n'.format(k, v))
+        else:
+            print('{:25s}: {}'.format(k, v))
+```
