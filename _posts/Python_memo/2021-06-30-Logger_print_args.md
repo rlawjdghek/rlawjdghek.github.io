@@ -1,6 +1,6 @@
 ---
-title:  "Logger, print_args"
-excerpt: "Logger 적극 활용. 모든것을 기록해두자."
+title:  "Logger, print_args, AverageMeter"
+excerpt: "모든것을 기록해두자."
 categories:
   - python memo
   
@@ -73,4 +73,23 @@ def print_args(args, logger=None):
             logger.write('{:25s}: {}\n'.format(k, v))
         else:
             print('{:25s}: {}'.format(k, v))
+```
+
+AverageMeter도 기록해두자. 이거 되게 편하다
+```python
+class AverageMeter (object):
+    def __init__(self):
+        self.reset ()
+
+    def reset(self):
+        self.val = 0
+        self.avg = 0
+        self.sum = 0
+        self.count = 0
+
+    def update(self, val, n=1):
+        self.val = val
+        self.sum += val * n
+        self.count += n
+        self.avg = self.sum / self.count
 ```
