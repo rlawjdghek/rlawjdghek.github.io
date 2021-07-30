@@ -12,6 +12,7 @@ toc_sticky: true
 toc_label: "On this page"
     
 last_modified_at: 2021-06-30T00:48:00-05:00
+
 ---
 
 서버에서 돌리기 위해서는 터미널 출력뿐만 아니라 더 안전하게 출력물들을 기록 해야한다. 또한 검색등을 활용 할 수 있으므로 
@@ -26,7 +27,7 @@ class Logger(object):
         self.file = None
 
     def open(self, file_path, mode=None):
-        if mode is not None: mode='w'
+        if mode isNone: mode='w'
         self.file = open(file_path, mode)
 
     def write(self, msg, is_terminal=1, is_file=1):
