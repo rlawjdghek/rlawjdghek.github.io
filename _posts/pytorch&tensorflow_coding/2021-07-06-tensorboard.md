@@ -133,7 +133,7 @@ tensorboard --logdir <경로>
 이 때 그냥 로컬 크롬에서 키면 안되고, 로컬과 연결시켜야 한다. **로컬 아나콘다**에서
 
 ```bash
-ssh -N -L localhost:16006:localhost:6006을 serverID@serverIP 
+ssh -N -L localhost:16006:localhost:6006 serverID@serverIP 
 ```
 를 치면 계속 실행이 되는데 이 때 크롬에서 **localhost:16006**을 실행하면 서버의 훈련 과정을 볼 수 있다.
 
