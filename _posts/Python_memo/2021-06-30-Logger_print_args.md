@@ -27,7 +27,7 @@ class Logger(object):
         self.file = None
 
     def open(self, file_path, mode=None):
-        if mode isNone: mode='w'
+        if mode is None: mode='w'
         self.file = open(file_path, mode)
 
     def write(self, msg, is_terminal=1, is_file=1):
