@@ -30,6 +30,14 @@ of Facial Recognition Embeddings.]
 3. <u>With the hope that</u> these insights could motivate future work, we have open-sourced all the datasets, the pre-processing and synthetic scripts, and the algorithm implementationin TODS. 
 [Revisiting time series outlier detection: definitions and benchmarks.]
 
+4. However, <u>their unstructured nature</u> combined with the complexity and ambiguity of natural language <u>pose</u> a challenge when using radiology reports for clinical research and other downstream applications, 
+especially in settings with limited labeled data. [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
+
+5. We define a novel information extraction schema for radiology reports, <u>intended to cover modst climically relevant information with in the report while allowing for ease and consistency during annotation.</u> 
+[RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
+
+6. <u>Along with these datasets</u>, there have been many advancements in NLP for the task of entiy and relation extraction. [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
+
 # Background
 
 1. Figure.3 illustrates the thress types of ouliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
@@ -37,7 +45,7 @@ of Facial Recognition Embeddings.]
 
 # Related work
 
-
+A <u>central limitation</u> of both of these approaches is that they require task-specific datasets to be densely annotated by domain experts. [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
 
 # Methods
 
