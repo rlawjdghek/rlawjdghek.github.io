@@ -27,7 +27,7 @@ of Facial Recognition Embeddings.]
 
 2. In this paper, <u>our goal is twofold</u>; we investigate ...
 
-3. <u>With the hope that</u> these insights could motivate future work, we have open-sourced all the datasets, the pre-processing and synthetic scripts, and the algorithm implementationin TODS. 
+3. <u>With the hope that</u> these insights could motivate future work, we have open-sourced all the datasets, the pre-processing and synthetic scripts, and the algorithm implementation in TODS. 
 [Revisiting time series outlier detection: definitions and benchmarks.]
 
 4. However, <u>their unstructured nature</u> combined with the complexity and ambiguity of natural language <u>pose</u> a challenge when using radiology reports for clinical research and other downstream applications, 
