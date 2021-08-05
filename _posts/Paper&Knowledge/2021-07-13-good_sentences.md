@@ -60,7 +60,8 @@ Except for the web attack dataset, all of other datasets <u>are dominated by</u>
 
 # Discussion
 
-
+<u>Given that existing information extraction systems for radiology reports often suffer from a lack of report coverage,</uz> we measure the number of tokens and sentances in report sections covered by our schema.
+ [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
 
 
 # Conclusion
