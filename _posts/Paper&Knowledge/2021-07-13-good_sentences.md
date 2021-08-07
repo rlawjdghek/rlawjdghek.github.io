@@ -58,6 +58,8 @@ Due to the space limitation, the detailed benchmark results of synthetic dataset
 
 Except for the web attack dataset, all of other datasets <u>are dominated by</u> AR, IForest and OCSVM.
 
+We <u>report</u> the full results for the benchmarks across entity types in Table 4 and across relation types in Table 5.
+
 # Discussion
 
 <u>Given that existing information extraction systems for radiology reports often suffer from a lack of report coverage,</uz> we measure the number of tokens and sentances in report sections covered by our schema.
