@@ -46,31 +46,25 @@ last_modified_at: 2021-08-14T15:33:00-05:00
  
 
 1. 읽는 사람이 두 번 생각하게 하지 마라. -> 짧게, 쉽게, 간단하게 쓰는 글이 Good.  
-<br>
-<br>
+
 2. accept 되려고 쓰는 것이 아니라 reject를 시키기 어렵게 하는 것이 목표이다. 
-<br>
-<br>
+
 3. citation은 맨 처음 나올때 쓴다. 
-<br>
-<br>
+
 4. abstract는 citation 안쓴다.
-<br>
-<br>
+
 5. "equation explain ... " 은 이상한 문장. equation이 설명하는 말이므로 말이 안된다.
 
 => equation indicate / is defined / represent / describe
-<br>
-<br>
+
 6. This result is important/essential result. 
-<br>
-<br>
+
 7. 문장은 무조건 짧게 쓸려고 해라.
-<br>
-<br>
+
 8. "et al." 은 한개의 단어라고 생각하자. 즉, "."을 꼭 붙인다. 
-<br>
-<br>
+
+ 
+
 9. 저자 3명 이상일 때는 "et al."을 꼭 붙인다. 
 
 ex) Woo -> Woo,
@@ -78,65 +72,81 @@ ex) Woo -> Woo,
 ex) Woo, Kim -> Woo and Kim
 
 ex) Woo, Kim, Lee -> Woo et al.
-<br>
-<br>
+
+ 
+
 10. 절대 줄임말 쓰면 안됨.
 
 ex) can't => cannot
 
 ex) let's => let us
-<br>
-<br>
+
+ 
+
 11. get 절대 쓰면 안됨. 너무 broad한 단어.
-<br>
-<br>
+
+ 
+
 12. since/because => , since/, because . 즉 항상 쉼표 붙이기 
-<br>
-<br>
+
+ 
+
 13. 대체적으로 Figure는 caption이 밑에, table은 위에
-<br>
-<br>
+
+ 
+
 14. 다른 논문을 인용하기 위해 문장에 쓸땐 영어를 같이 써준다. 
 
 ex) by [1]. => by work [1]. 
-<br>
-<br>
+
+ 
+
 15. 정의를 쓸 땐 그냥 베껴라. 대신 표시는 해두자.
-<br>
-<br>
+
+ 
+
 16. 위키피디아의 글을 이용하되 절대 참조는 하면 안된다.
-<br>
-<br>
+
+ 
+
 17. active한 문장을 써야한다. (grammerly에서 추천하는 것이 맞다.)
-<br>
-<br>
+
+ 
+
 18. 논문을 읽을 때 좋은 문장, 논문의 구조를 파악하려 하자. 만약 좋은 문장이 있으면 저장해 두었다가 약간 수정해서
 
 쓰자.
-<br>
-<br>
+
+ 
+
 19. "that is" 다음엔 쉼표를 찍어야한다.
-<br>
-<br>
+
+ 
+
 20. "A versus B" => "A vs. B". vs.는 단축어이므로 온점을 찍어야 한다.
-<br>
-<br>
+
+ 
+
 21. 공식 앞에 : 붙이기
 
 ex) ... as follows: 
-$A=B * C$
-<br>
-<br>
+
+    A=B * C
+
+ 
 
 22. show = demonstrate = illustrate = present = depict = describe = represent
-<br>
-<br>
+
+ 
+
 23. Self-Attention or self-Attention 둘다 맞지만 중요한 건 논문에서 일관성 있게 한 단어만 써야한다.
-<br>
-<br>
+
+ 
+
 24. 논문에서 내가 이해 못하는 것은 절대로 넣으면 안된다. 모든 것을 방어할 수 있어야한다.
-<br>
-<br>
+
+ 
+
 25. 문장 베낀거 바꾸는 법.
 
 1) 능동 <-> 수동
@@ -146,50 +156,66 @@ $A=B * C$
 3) 문장 끊거나 붙이기
 
 4) 유사어
-<br>
-<br>
+
+ 
+
+ 
+
 26. 논문에 있는 모든 문장은 이유가 있어야 한다.
-<br>
-<br>
+
+ 
+
 27. That is, learning only from the core tensors is sufficient for differentiating real and fake images.
 
 => In other words, learning mainly/primarily from the core tensors is important/critical for distinguish/dividing betwwen real and fake images
-<br>
-<br>
+
 28. 디테일 한 것 까지 다 챙기기. 나중에 데드라인 지나고 나면 후회한다.
-<br>
-<br>
+
+ 
+
 29. 공식 다음엔 쉼표, 그 후에 where로 변수 설명. 문장이 공식으로 끝나면 온점으로 마무리.
+
+ 
 
 ex) A=B*C,
 
+ 
+
 where ....
-<br>
-<br>
+
+ 
+
 30. 어떤 단어를 쓸까 할 땐 구글에서 몇개의 문서가 검색되었는지 이용.
 
+ 
+
 ex) lack of 14800000 vs. lacking of 150000 이면 lack of 가 맞는 표현이다.
-<br>
-<br>
+
+ 
+
 31. There are many research work. => work에는 s를 안 붙이는데 복수로 표현된다.
-<br>
-<br>
+
+ 
+
 32. Because/Since Lee and Kim [2] use an attention transfer function, their performance is much better compared to
 
 baseline EfficientNets.<=> Their enhanced performance compared to baseline EfficientNets are mainly due to (/attributed to / ascribed to) the attention transfer function.
 
 <=> By leveragin/appying/useing/incorporating an attention transfer function, their performance significantly improved compared to that of EfficientNets.
-<br>
-<br>
+
 33. 위에서 that of 를 썼듯, 내가 항상 고민하는 영어 표현, 사과의 맛과 귤의 맛을 비교해야 하는데 flavor를 2번 쓰기 싫은 것을 해결해주는 표현. 
-<br>
-<br>
+
+ 
+
 34. "i.e." <=> that is (즉), "e.g." <=> for example (예를 들어)
 
+ 
+
 ex) There exists many deepfakes datasets. (e,g, Faceswap, NT and etc.)
-<br>
-<br>
+
 35. A: B
+
+ 
 
 1) A와 B가 cause and effiect 관계
 
@@ -198,8 +224,7 @@ ex) There exists many deepfakes datasets. (e,g, Faceswap, NT and etc.)
 ex) our contribution are as follows: firstly [...]; secondly, [...]; 
 
 3) equation
-<br>
-<br>
+
 36. A; B
 
  
@@ -209,11 +234,11 @@ ex) our contribution are as follows: firstly [...]; secondly, [...];
 2) ; 다음에 however, for example, that is 등등 A에 대한 부가 설명이 B에 나올때 쓴다. 그러면 그냥 온점으로 끊는 것이랑 무엇이 다른가=> 끊어도 되는데 더 약하게 끊고 싶을때. 온점으로 끊는 것이 더 강한 표현.
 
 3) B가 솔로 문장으로 쓰이기에 좀 짧다 싶을 때
-<br>
-<br>
+
 37. "et al."은 한개의 단어로 생각.
-<br>
-<br>
+
+ 
+
 38. render 사용법 (가장 기본적으로는 make와 같다고 보면 된다. 추가적으로 형용사로만 존재하는 단어 (ex) robust)를 make를 사용하고 싶을 때 render를 사용하면 된다.)
 
 A render B
@@ -227,43 +252,58 @@ ex) Attention transfer renders feature matching easier than before.
 ex) Through KD, our machine unlearning approach renders the training optimization process faster. 
 
 <=> Through KD, our machine unlearning apporach accelerates the training optimization process.
-<br>
-<br>
+
+ 
+
 39. Note that -> Note, 맨날 Note that하면 진부하다.
-<br>
-<br>
+
+ 
+
 40. wide range of tasks => 진부하지 않은 표현
-<br>
-<br>
+
+ 
+
 41. order of magnitude => 정확한 정의는 수학에서 
-$\alpha$이지만 이 논문에서는 outperform으로 나타냄. 하지만 context마다 다른 표현이 된다. 
-<br>
-<br>
+α
+ 이지만 이 논문에서는 outperform으로 나타냄. 하지만 context마다 다른 표현이 된다. 
+
+ 
+
 42. experiment는 항상 복수 => experiments
-<br>
-<br>
+
+ 
+
 43. During the training (x) During training (o)
-<br>
-<br>
+
+ 
+
 44. 문단 시작할때 다른 단어를 쓰도록 노력. ex) We-> However, To comply ...
-<br>
-<br>
+
+ 
+
 45. on par : 비교 할때 쓰는데 similar, comparable 이라는 의미로 쓴다.
-<br>
-<br>
+
+ 
+
 46. demonstrate the superiority : outperform 대신 진부하지 않은 표현
-<br>
-<br>
+
+ 
+
 47. this confirm finding of adding linear : Linear를 쓴 것이 더 좋다는 뜻.
-<br>
-<br>
+
+ 
+
 48. hypothesis->believe로 쓰자. 뭔가 좀 더 가정하는 것보다 완화된 표현이라 생각된다.
-<br>
-<br>
+
+ 
+
 49. underperform : A outperforms B <=> B underperforms A 이지만 outperform의 진부하지 않은 표현
-<br>
-<br>
+
+ 
+
 50. 내 문장 -> 교수님 문장
+
+ 
 
 We can observe that visualized CAM is activated on face region. Compared with \textit{Resized}, blurred images yield more broadly activated CAM. Therefore, features are more smoothly distributed, and model can be confused about classifying with real and fake. In results, it causes the weak performance. (see Table.~
 ???
@@ -276,8 +316,9 @@ We can observe that visualized CAM is activated on face region, compared to \tex
 , and Fig.~
 ???
 . Therefore, features are more smoothly distributed, and it demonstrates that the detection model can be confused about classifying with real and fake, resulting the overall low performance. 
-<br>
-<br>
+
+ 
+
 51. 인터넷 기사나 조사기관에서 발표한 내용 참조하기
 
 @misc{WHO_falls,
@@ -290,138 +331,34 @@ We can observe that visualized CAM is activated on face region, compared to \tex
 }
 
 기사에 위 해당하는 내용만 바꿔서 적으면 된다.
-<br>
-<br>
+
+ 
+
 52. a lot of research -> much research
-<br>
-<br>
+
+ 
+
 53. some 사용하지말기. 너무 broad하다. 
-<br>
-<br>
+
+ 
+
 54. Research는 항상 단수로 쓴다
-<br>
-<br>
+
+ 
+
 55. Abstract는 참조 잘 안 씀
-<br>
-<br>
+
+ 
+
 56. Abstract에서 마지막에 뭘 보여주는지는 썻고 우리가 뭘 찾았는 지까지 써 준다.
-<br>
-<br>
+
+ 
+
 57. Best 같이 최상급의 단어를 쓸 땐 주의하자. 특정 객체를 가리키는 것은 제대로 언급할 수 있는 때 쓰는 습관. Popular 로 고치심
-<br>
-<br>
+
+ 
+
 58. 숫자 천자리마다 쉼표 찍어주기
 
-
-### 좋은 문장들
  
  
-#### Abstract
-
-1. Time series outlier detection has been extensively studied with many advanced algorithms propsed in the past decade. [Revisiting time series outlier detection: definitions and benchmarks.]
-
-2. <u>Learning similarity functions between image pairs with deep neural networks yields highly correlated activations of large embeddings.</u> [BIER-Boosting Independent Embeddings Robustly.]
-
-3. <u>Our method does not introduce any additional parameters and works with any differentiable loss function.</u> [BIER-Boosting Independent Embeddings Robustly.]
-
-4. We evaluate our metric learning method on image retrieval tasks and show that it improves over state-of-the-art methods on Cars-196 and VehicleID datasets <u>by 
-a significant margin</u> [BIER-Boosting Independent Embeddings Robustly.]
-
-5. <u>Riding on the waves of deep neural networks,</u> deep metric learning has achieved promising results in various tasks by using triplet network or Siamese network. [Hard-Aware Deply Cascaded Embedding.]
-
-#### Introduction
-    
-1. CCTV surveilance and the facial recognition technology is <u>on its way</u> to becoming ubiquitous in large cities around the world. [Understanding the Privacy
-of Facial Recognition Embeddings.]
-
-2. In this paper, <u>our goal is twofold</u>; we investigate ...
-
-3. <u>With the hope that</u> these insights could motivate future work, we have open-sourced all the datasets, the pre-processing and synthetic scripts, and the algorithm implementation in TODS. 
-[Revisiting time series outlier detection: definitions and benchmarks.]
-
-4. However, <u>their unstructured nature</u> combined with the complexity and ambiguity of natural language <u>pose</u> a challenge when using radiology reports for clinical research and other downstream applications, 
-especially in settings with limited labeled data. [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
-
-5. We define a novel information extraction schema for radiology reports, <u>intended to cover modst climically relevant information with in the report while allowing for ease and consistency during annotation.</u> 
-[RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
-
-6. <u>Along with these datasets</u>, there have been many advancements in NLP for the task of entiy and relation extraction. [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
-
-7. <u>To address this issue</u>, we present a learning approach, called BIER. [BIER-Boosting Independent Embeddings Robustly.]
-
-8. <u>In our evaluation,</u> we show that BIER significantly reduces the correlation of large embeddings and works with several loss function <u>while increasing retrieval accuracy
-by a large margin.</u> [BIER-Boosting Independent Embeddings Robustly.]
-
-9. <u>BIER does not introduce any additional parameters into a CNN and has only negligible additional cost during training time and runtime.</u> [BIER-Boosting Independent Embeddings Robustly.]
-
-10. Moreover, the commonly available class assignments <u>give rise to</u> image relations aside from the standard, supervised learning task of "pulling" smaples with identical class labels together
-while "pushing" away samples with different labels. [DIVA: Diverse Visual Feature Aggregation for Deep Metric Learning]
-
-11. We <u>tackle the issue</u> of generalization in DML by designing diverse learning tasks complementing standard supervised training, leveraging only the comonly
-provided training samples and labels. [DIVA: Diverse Visual Feature Aggregation for Deep Metric Learning]
-
-#### Background
-
-1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
-
-
-#### Related work
-
-1. A <u>central limitation</u> of both of these approaches is that they require task-specific datasets to be densely annotated by domain experts. [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
-
-2. Image embedding falls <u>under the unbrella</u> of distance metric learning. [Deep Randomized Ensembles for Metric Learning.]
-
-3. THe main objective of metric learning in Computer Vision is to learn a function which maps a k-dimensional input vector, which is typically an input image or a feature representation of an image, 
-into a d-dimensional vector space. [BIER-Boosting Independent Embeddings Robustly.] -> related work 맨 처음에 사용할때 좋다. 
-
-4. They <u>leverage</u> the benefits of deeply supervised networks <u>by employing</u> a contrastive loss function and train lower layers of the network to handle easier examples, 
-and higher layers in a network to handle harder examples. [BIER-Boosting Independent Embeddings Robustly.]
-
-#### Methods
-
-1. <u>In what follows</u>, we first describe the details of the synthetic datasets and the real-world datasets, and then <u>elaborate</u> on the included algorithms. [Revisiting time series outlier detection: definitions and benchmarks.]
-
-2. <u>As opposed to learning a distance metric,</u> in our work we learn a cosine similarity score which we define as dot product between two embeddings. [BIER-Boosting Independent Embeddings Robustly.]
-
-
-
-
-
-
-#### Experimental Results
-
-1. Due to the space limitation, the detailed benchmark results of synthetic datasets <u>are tabulated</u> in Appendix D. [Revisiting time series outlier detection: definitions and benchmarks.]
-
-2. Except for the web attack dataset, all of other datasets <u>are dominated by</u> AR, IForest and OCSVM.
-
-3. We <u>report</u> the full results for the benchmarks across entity types in Table 4 and across relation types in Table 5.
-
-
-
-
-
-
-
-
-#### Discussion
-
-1. <u>Given that existing information extraction systems for radiology reports often suffer from a lack of report coverage,</uz> we measure the number of tokens and sentances in report sections covered by our schema.
- [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
-
-
-
-
-
-
-
-
-
-
-
-
-#### Conclusion
-
-
-
-
-
