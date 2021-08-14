@@ -46,9 +46,8 @@ last_modified_at: 2021-08-14T15:33:00-05:00
  
 
 1. 읽는 사람이 두 번 생각하게 하지 마라. -> 짧게, 쉽게, 간단하게 쓰는 글이 Good.
-\\  
-\\   
-\\\ ㅁㄴㅇ
+
+ashjdkflaksjhdfakjshdf
 
 2. accept 되려고 쓰는 것이 아니라 reject를 시키기 어렵게 하는 것이 목표이다. 
 
