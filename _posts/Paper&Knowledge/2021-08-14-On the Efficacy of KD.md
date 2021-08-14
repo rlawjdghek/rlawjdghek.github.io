@@ -65,7 +65,7 @@ Bigger models are not better teachers & Analyzing student and teacher capacity
 
 여기서 sequential KD의 개념이 나온다. Sequential KD란 teacher와 student 사이의 갭을 줄이기 위해 중간 사이즈의 모델을 추가하는 것이다. 하지만 여기서의 
 결론은 마지막 가장 작은 student와 scratch로 훈련한 student를 비교해도 역시 scratch가 좋다는 것이다. 또한 이전에 논문들은 이 sequential 모델들을 ensemble해서
- 성능을 높였다고 하는데 이것또한 그냥 모든 모델을 scratch하는 것보다 성능이 안좋다. 즉 모든 모델이 지식을 계속해서 전달하기 때문에 독립성이 떨어져서 앙상블 효과가 떨어진다. 
+ 성능을 높였다고 하는데 이것또한 그냥 모든 모델을 scratch하는 것보다 성능이 안좋다. 즉 모든 모델이 지식을 계속해서 전달하기 때문에 <u>독립성이 떨어져서 앙상블 효과가 떨어진다.</u> 
 
 이 파트에서 또한 저자가 제시한 early stop을 뒷받침 해준다. 이유는 early stopping 하는 것이 teacher가 지식을 애초에 조금 전달하는 것이므로 더 작은 모델을 
-사용한다는 것과 동일한 효과를 낼 수 있다는 것이다.
+사용한다는 것과 동일한 효과를 낼 수 있다는 것이다. 
