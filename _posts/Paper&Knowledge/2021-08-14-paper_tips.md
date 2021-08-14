@@ -45,19 +45,19 @@ last_modified_at: 2021-08-14T15:33:00-05:00
 
  
 
-1. 읽는 사람이 두 번 생각하게 하지 마라. -> 짧게, 쉽게, 간단하게 쓰는 글이 Good.  
+$1.$ 읽는 사람이 두 번 생각하게 하지 마라. -> 짧게, 쉽게, 간단하게 쓰는 글이 Good.  
 
-2. accept 되려고 쓰는 것이 아니라 reject를 시키기 어렵게 하는 것이 목표이다. 
+$2.$ accept 되려고 쓰는 것이 아니라 reject를 시키기 어렵게 하는 것이 목표이다. 
 
-3. citation은 맨 처음 나올때 쓴다. 
+$3.$ citation은 맨 처음 나올때 쓴다. 
 
-4. abstract는 citation 안쓴다.
+$4.$ abstract는 citation 안쓴다.
 
-5. "equation explain ... " 은 이상한 문장. equation이 설명하는 말이므로 말이 안된다.
+$5.$ "equation explain ... " 은 이상한 문장. equation이 설명하는 말이므로 말이 안된다.
 
 => equation indicate / is defined / represent / describe
 
-6. This result is important/essential result. 
+$6.$ This result is important/essential result. 
 
 7. 문장은 무조건 짧게 쓸려고 해라.
 
