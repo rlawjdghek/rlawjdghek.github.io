@@ -2,10 +2,10 @@
 title:  "Tucker Decomposition"
 excerpt: "Tucker Decomposition에서 Eigenvector 구하기"
 categories:
-  - Window
+  - Pytorch & Tensorflow & Coding
   
 tags:
-  - Window
+  - Pytorch & Tensorflow & Coding
   
 toc: true
 toc_sticky: true
