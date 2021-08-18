@@ -163,6 +163,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="jeonghokim@115.145.188.88:22 password">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="jeonghokim@115.145.190.164:22">
         <serverdata>
           <mappings>
