@@ -423,13 +423,17 @@ into a d-dimensional vector space. [BIER-Boosting Independent Embeddings Robustl
 4. They <u>leverage</u> the benefits of deeply supervised networks <u>by employing</u> a contrastive loss function and train lower layers of the network to handle easier examples, 
 and higher layers in a network to handle harder examples. [BIER-Boosting Independent Embeddings Robustly.]
 
+5. <u>In the work of Hinton et al.,</u> knowledge is defined as the teacher's outputs after the final softmax layer. [Knowledge Distillation via softmax Regression Representation Learning]
+
 #### Methods
 
 1. <u>In what follows</u>, we first describe the details of the synthetic datasets and the real-world datasets, and then <u>elaborate</u> on the included algorithms. [Revisiting time series outlier detection: definitions and benchmarks.]
 
 2. <u>As opposed to learning a distance metric,</u> in our work we learn a cosine similarity score which we define as dot product between two embeddings. [BIER-Boosting Independent Embeddings Robustly.]
 
+3. <u>Let us denote by p the output of the teacher network when fed with some input image x.</u> [Knowledge Distillation via softmax Regression Representation Learning]
 
+4. 
 
 
 
