@@ -406,6 +406,8 @@ while "pushing" away samples with different labels. [DIVA: Diverse Visual Featur
 11. We <u>tackle the issue</u> of generalization in DML by designing diverse learning tasks complementing standard supervised training, leveraging only the comonly
 provided training samples and labels. [DIVA: Diverse Visual Feature Aggregation for Deep Metric Learning]
 
+12. <u>To tackle them</u>, we propose a residual learning framework to make the learning process stable and efficient. [Distilling Knowledge via Knowledge Review.] 
+
 #### Background
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
