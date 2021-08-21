@@ -435,7 +435,7 @@ and higher layers in a network to handle harder examples. [BIER-Boosting Indepen
 
 3. <u>Let us denote by p the output of the teacher network when fed with some input image x.</u> [Knowledge Distillation via softmax Regression Representation Learning]
 
-4. 
+4. We refer to $"\odot""$ <u>as nesting of functions</u> where $gf\odot f (x) = g(f(x))$. [Distilling Knowledge via Knowledge Review.] -> 합성 함수 영어로.
 
 
 
