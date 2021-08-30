@@ -407,6 +407,9 @@ provided training samples and labels. [DIVA: Diverse Visual Feature Aggregation 
 
 12. <u>To tackle them</u>, we propose a residual learning framework to make the learning process stable and efficient. [Distilling Knowledge via Knowledge Review.] 
 
+13. Whereas the knowledge distillation enables utilizing the large network <u>in a condensed manner</u>, the inference on such large network, a.k.a. the teacher network, <u>becomes an ultimate burden of its 
+practical usages.</u> [Refine Myself by Teaching Myself: Feature Refinement via Self-Knowledge Distillation]
+
 #### Background
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
