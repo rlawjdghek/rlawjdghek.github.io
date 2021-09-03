@@ -149,6 +149,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="NIPA-AAAI_KD">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="NIPA-tensordecomp">
         <serverdata>
           <mappings>
@@ -178,13 +185,6 @@
         </serverdata>
       </paths>
       <paths name="jeonghokim@115.145.190.195:22">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="jeonghokim@14.49.45.144:16022">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

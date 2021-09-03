@@ -429,6 +429,9 @@ and higher layers in a network to handle harder examples. [BIER-Boosting Indepen
 
 5. <u>In the work of Hinton et al.,</u> knowledge is defined as the teacher's outputs after the final softmax layer. [Knowledge Distillation via softmax Regression Representation Learning]
 
+6. <u>The rationale behind</u> is the use of extra supervision from teacher model in teacher model in target model training, <u>beyond</u> a conventional supervised learning objective such as the
+CE loss subject to labelled training data. [Knowledge Distillation by On-the-Fly Native Ensemble.]: 어떤 것이 좋다 또는 나쁘다는 이유를 들 때 좋은듯. 
+
 #### Methods
 
 1. <u>In what follows</u>, we first describe the details of the synthetic datasets and the real-world datasets, and then <u>elaborate</u> on the included algorithms. [Revisiting time series outlier detection: definitions and benchmarks.]

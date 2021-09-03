@@ -5,7 +5,7 @@ categories:
   - Paper & Knowledge
   
 tags:
-  - Paper & Knowledge
+  - Knowledge Distillation
  
 published: False
 toc: true

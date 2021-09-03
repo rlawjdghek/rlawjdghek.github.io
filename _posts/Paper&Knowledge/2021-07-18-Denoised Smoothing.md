@@ -5,7 +5,7 @@ categories:
   - Paper & Knowledge
   
 tags:
-  - Paper & Knowledge
+  - Denoise
  
 published: false
 toc: true
