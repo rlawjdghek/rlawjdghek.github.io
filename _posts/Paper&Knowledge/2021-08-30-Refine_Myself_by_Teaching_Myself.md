@@ -49,7 +49,13 @@ task에 대하여는 제한적일 수 밖에없다.
 auxiliary network를 사용하다 보니 teacher와 달리 충분히 refined된 정보를 줄 수 없다. 하지만 이 논문에서는 auxiliary self-teacher network를 제시하여 refined feature map을 생성한다. 
 
 Auxiliary self-teacher network를 만들 때 (정확히는 만드는 것이 아니고 distillation하는 과정을 말한다.) feature network로 top-down을 사용한 FPN이후에 더 발전된 BiFPN을 사용한다.
-![](/assets/images/2021-08-30-refine_myself_by_teaching_myself/1.PNG)
+
+Introduction과 related work를 읽으면서 느낀 것인데, 발표 내용에 넣은 아래 슬라이드를 보자.
+![](/assets/images/2021-08-30-refine_myself_by_teaching_myself/6.PNG)
+teacher를 사용한 KD와 위에서 언급한 2가지 self-distillation 방법론을 정리하였다. 각각의 방법론에는 명확한 단점이 존재하다는 것을 분석한 것이 introduction과 related work에서 저자들이 
+말하고자 싶은 것이었고, 주목할 만한 점은 저자들이 제시한 self-teacher network는 (a)와 (c)를 결합하여 탄생한 것이라 생각이 든다. 즉, teacher의 단점인 긴 훈련시간과,
+refined information이 부족한 작은 크기의 auxiliary network의 중간 크기로 self-teacher network를 만들고 이를 이용하여 학습을 한다. 뒤에 나오지만 이 self-teacher network의 크기는 student보다는
+작지만 attention map으로 refined information을 전달할 수 있다는 것을 보였다. (ablation 참고.) 
 
 
 ### Methods
