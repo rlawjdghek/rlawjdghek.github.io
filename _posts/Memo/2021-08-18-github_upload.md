@@ -36,6 +36,4 @@ last_modified_at: 2021-08-18T14:48:00-05:00
 7. git remote add origin https://github.com/rlawjdghek/git_test
 8. git push -u origin main
 
- 
-
 * 100MB 이상 파일은 못올리므로 포함 안되게 주의하자
