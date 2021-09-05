@@ -26,9 +26,9 @@ class Logger(object):
         self.terminal = sys.stdout
         self.file = None
 
-    def open(self, file_path, mode=None):
+    def open(self, fp, mode=None):
         if mode is None: mode='w'
-        self.file = open(file_path, mode)
+        self.file = open(fp, mode)
 
     def write(self, msg, is_terminal=1, is_file=1):
         if '\r' in msg: is_file = 0
