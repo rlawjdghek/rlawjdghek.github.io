@@ -430,7 +430,10 @@ and higher layers in a network to handle harder examples. [BIER-Boosting Indepen
 5. <u>In the work of Hinton et al.,</u> knowledge is defined as the teacher's outputs after the final softmax layer. [Knowledge Distillation via softmax Regression Representation Learning]
 
 6. <u>The rationale behind</u> is the use of extra supervision from teacher model in teacher model in target model training, <u>beyond</u> a conventional supervised learning objective such as the
-CE loss subject to labelled training data. [Knowledge Distillation by On-the-Fly Native Ensemble.]: 어떤 것이 좋다 또는 나쁘다는 이유를 들 때 좋은듯. 
+CE loss subject to labelled training data. [Knowledge Distillation by On-the-Fly Native Ensemble.]: 어떤 것이 좋다 또는 나쁘다는 이유를 들 때 좋은듯.
+
+7. These representations could then be fine-tuned with a few labels for a supervised <u>downstream</u> task. [A self supervised styleGAN for classification with extremely limited annotations] 
+=> 어떤 큰 범주의 하위 집단 task를 표현할 때 좋은듯. 여기서는 supervise task의 한 원소로 few shot learning을 설명함. 
 
 #### Methods
 

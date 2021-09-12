@@ -62,7 +62,7 @@ class HAIDataset2(Dataset):  # label이 2번쨰부터 window_size번째까지
         return instance 
 
 def HAIDataset2_collate_fn(datas):
-    label_ts = [data["label_ts"] for data in datas]
+    label_ts = np.stack([data["label_ts"] for data in datas])
     input_ = [data["input"] for data in datas]
     label = [data["label"] for data in datas]
     if "attack" in datas[0].keys():
