@@ -374,6 +374,10 @@ a significant margin</u> [BIER-Boosting Independent Embeddings Robustly.]
 
 5. <u>Riding on the waves of deep neural networks,</u> deep metric learning has achieved promising results in various tasks by using triplet network or Siamese network. [Hard-Aware Deply Cascaded Embedding.]
 
+6. Recently, <u>a popular line of research</u> is to incorporate margins in well-established loss functions in order to maximise face class separability. [ArcFace: Additive Angular Margin Loss for Deep Face Recognition]
+=> "최근, 많은 연구들은~" 하는 것보다 더 희귀한 표현. 
+
+
 #### Introduction
     
 1. CCTV surveilance and the facial recognition technology is <u>on its way</u> to becoming ubiquitous in large cities around the world. [Understanding the Privacy
