@@ -459,7 +459,8 @@ CE loss subject to labelled training data. [Knowledge Distillation by On-the-Fly
 
 3. We <u>report</u> the full results for the benchmarks across entity types in Table 4 and across relation types in Table 5.
 
-
+4. IE-KD is a very <u>general framework for knowledge transfer between any type of networks and training strategies.<\u> [Revisiting Knowledge Distillation: An Inheritance and Exploration Framework.]
+=> 우리 method가 일반적으로 많이 쓰일 경우 이런 표현도 가능하다. 
 
 
 
