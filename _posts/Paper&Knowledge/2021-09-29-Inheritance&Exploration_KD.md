@@ -26,5 +26,5 @@ exploration을 소개한다. 논문의 표현을 그대로 적자면,
 "while **the exploration part** is encouraged to learn representations different from the inherited ones with a dis-similarity loss."
 
 이 두 방법을 결합함으로써, 저자들은 teacher의 정보보다 더 정확한 정보를 전달 할 수 있다고 주장한다. 
-\이것이 가능한 이유는 
+\\이것이 가능한 이유는 
 
