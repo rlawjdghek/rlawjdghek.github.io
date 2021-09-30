@@ -377,6 +377,11 @@ a significant margin</u> [BIER-Boosting Independent Embeddings Robustly.]
 6. Recently, <u>a popular line of research</u> is to incorporate margins in well-established loss functions in order to maximise face class separability. [ArcFace: Additive Angular Margin Loss for Deep Face Recognition]
 => "최근, 많은 연구들은~" 하는 것보다 더 희귀한 표현. 
 
+7. <u>Examples include</u> distilling a large network into a smaller one, transferring knowledge from one sensory modality to a second, or ensembling a collection of models into a single 
+estimator. [Contrastive Representation Distillation.] => "For example, ~" 같은 진부한 표현보다 강렬하게 abstract에서 표현 하고 싶을때 사용하면 좋아 보인다. 
+
+
+
 
 #### Introduction
     
@@ -471,8 +476,6 @@ CE loss subject to labelled training data. [Knowledge Distillation by On-the-Fly
 
 1. <u>Given that existing information extraction systems for radiology reports often suffer from a lack of report coverage,</uz> we measure the number of tokens and sentances in report sections covered by our schema.
  [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
-
-
 
 
 
