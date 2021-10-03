@@ -467,7 +467,8 @@ CE loss subject to labelled training data. [Knowledge Distillation by On-the-Fly
 4. IE-KD is a very <u>general framework for knowledge transfer between any type of networks and training strategies.<\u> [Revisiting Knowledge Distillation: An Inheritance and Exploration Framework.]
 => 우리 method가 일반적으로 많이 쓰일 경우 이런 표현도 가능하다. 
 
-
+5. Table 5 reports both the speed-up and compression rate obtained by various FitNets w.r.t. the teacher model <u>along with their number of layers, capacity and accuracies.</u> [FitNets: Hints For Thin Deep Nets.]
+=> along with을 활용하는 문장.
 
 
 
