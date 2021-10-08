@@ -455,6 +455,9 @@ CE loss subject to labelled training data. [Knowledge Distillation by On-the-Fly
 
 4. We refer to $"\odot""$ <u>as nesting of functions</u> where $gf\odot f (x) = g(f(x))$. [Distilling Knowledge via Knowledge Review.] -> 합성 함수 영어로.
 
+5. We define a function $f$ which projects data space $\mathcal{D}$ to the embedding space $\mathcal{X}$ by $f(\cdot, \theta): \mathcal{D} \rightarrow \mathcal{X}$, where
+$f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augmentation in Embedding Space for Deep Metric Learning.]
+=> Representation Learning 문장에 좋은 표현인듯.
 
 #### Experimental Results
 
