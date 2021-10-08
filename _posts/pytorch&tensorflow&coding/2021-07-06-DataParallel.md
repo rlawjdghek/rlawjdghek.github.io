@@ -128,7 +128,9 @@ parser.add_argument("--local_rank", default=0, type=int)
 parser.add_argument("--world_size", default=3, type=int)
 args=parser.parse_args()
 print("local rank : {}".format(args.local_rank))
+torch.cuda.set_device(args.gpu)
 torch.distributed.init_process_group(backend="nccl")
+
 
 train_dataset = torchvision.datasets.CIFAR100(root="./data", download=True, transform=T.ToTensor())
 sampler = DistributedSampler(train_dataset)
@@ -194,7 +196,6 @@ args.gpu = args.local_rank
 torch.cuda.set_device(args.gpu)
 torch.distributed.init_process_group(backend="nccl")
 
-#train_dataset = torchvision.datasets.CIFAR100(root="../data", transform=T.ToTensor())
 train_dataset = torchvision.datasets.CIFAR100(root="./data", transform=T.ToTensor())
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=128, num_workers=8)
 
@@ -226,7 +227,8 @@ for epoch in range(100):
 방법은 토치의 DistributeDataParallel과 같다. 무조건 local_rank를 parser에 집어넣고 프로세스 그룹을 initialize한 다음 apex에서 DDP로 묶어준다. 
 실행 명령어도 토치와 같다. 
 ![](/assets/images/2021-07-07-DataParallel/5.JPG)
-하지만 문제는 실제 KD 이미지넷 코드를 돌릴 경우 num_workers=0아니면 only to child process 에러가 뜬다. 아직 방법을 찾지는 못함.
+<strike>하지만 문제는 실제 KD 이미지넷 코드를 돌릴 경우 num_workers=0아니면 only to child process 에러가 뜬다. 아직 방법을 찾지는 못함.</strike> 
+(+2021-10-08에 추가한 아래 코드 보고 나중에 해보자. 아래코드는 num_worker가 있어도 된다.)
 
 ### apex + amp
 amp는 mixed_precision이라는 것을 사용하여 쓸데없는 계산 량을 줄이고 성능 차이는 거의 안나게 하는 패키지.
@@ -250,7 +252,7 @@ args=parser.parse_args()
 
 args.gpu = args.local_rank
 torch.cuda.set_device(args.gpu)
-torch.distributed.init_process_group(backend="nccl", init_method="env://")
+torch.distributed.init_process_group(backend="nccl")
 memory_format = torch.contiguous_format
 
 train_dataset = torchvision.datasets.CIFAR100(root="./data", transform=T.ToTensor())
@@ -306,7 +308,7 @@ args=parser.parse_args()
 
 args.gpu = args.local_rank
 torch.cuda.set_device(args.gpu)
-torch.distributed.init_process_group(backend="nccl", init_method="env://")
+torch.distributed.init_process_group(backend="nccl")
 
 train_dataset = torchvision.datasets.CIFAR100(root="./data", transform=T.ToTensor())
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=128)
@@ -408,3 +410,142 @@ for epoch in range(100):
 ```
 
 
++ 2021-10-08 알아낸것.
+Representation baseline 환경 구축 하다 알아낸것. arcface에서 MSCeleb을 병렬처리로 훈련하기 위해 커스텀 dataloader를 만들었다. 전체 코드는 아래와 같고 나중에 병렬처리 에러가 뜨면 아래 코드 참고해서 작성하자.
+
+```python
+from os.path import join as opj
+import numpy as np
+import numbers
+import threading
+import queue as Queue
+
+import mxnet as mx
+import torch
+from torch.utils.data import Dataset, DataLoader
+import torchvision.transforms as T
+
+class BackgroundGenerator(threading.Thread):
+    def __init__(self, generator, local_rank, max_prefetch=6):
+        super(BackgroundGenerator, self).__init__()
+        self.queue = Queue.Queue(max_prefetch)
+        self.generator = generator
+        self.local_rank = local_rank
+        self.daemon = True
+        self.start()
+
+    def run(self):
+        torch.cuda.set_device(self.local_rank)
+        for item in self.generator:
+            self.queue.put(item)
+        self.queue.put(None)
+
+    def next(self):
+        next_item = self.queue.get()
+        if next_item is None:
+            raise StopIteration
+        return next_item
+
+    def __next__(self):
+        return self.next()
+
+    def __iter__(self):
+        return self
+
+
+class DataLoaderX(DataLoader):
+    def __init__(self, local_rank, **kwargs):
+        super(DataLoaderX, self).__init__(**kwargs)
+        self.stream = torch.cuda.Stream(local_rank)
+        self.local_rank = local_rank
+
+    def __iter__(self):
+        self.iter = super(DataLoaderX, self).__iter__()
+        self.iter = BackgroundGenerator(self.iter, self.local_rank)
+        self.preload()
+        return self
+
+    def preload(self):
+        self.batch = next(self.iter, None)
+        if self.batch is None:
+            return None
+        with torch.cuda.stream(self.stream):
+            for k in range(len(self.batch)):
+                self.batch[k] = self.batch[k].to(device=self.local_rank, non_blocking=True)
+
+    def __next__(self):
+        torch.cuda.current_stream().wait_stream(self.stream)
+        batch = self.batch
+        if batch is None:
+            raise StopIteration
+        self.preload()
+        return batch
+
+class MXFaceDataset(Dataset):
+    def __init__(self, local_rank, data_root_dir="/home/CVPR_data/faces_emore"):
+        super().__init__()
+        self.transform = T.Compose([
+            T.ToPILImage(),
+            T.RandomHorizontalFlip(),
+            T.ToTensor(),
+            T.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
+        ])
+        self.data_root_dir = data_root_dir
+        self.local_rank = local_rank
+        path_imgrec = opj(self.data_root_dir, "train.rec")
+        path_imgidx = opj(self.data_root_dir, "train.idx")
+        self.imgrec = mx.recordio.MXIndexedRecordIO(path_imgidx, path_imgrec, 'r')
+        s = self.imgrec.read_idx(0)
+        header, _ = mx.recordio.unpack(s)
+        if header.flag > 0:
+            self.header0 = (int(header.label[0]), int(header.label[1]))
+            self.imgidx = np.array(range(1, int(header.label[0])))
+        else:
+            self.imgidx = np.array(list(self.imgrec.keys))
+
+    def __len__(self):
+        return len(self.imgidx)
+
+    def __getitem__(self, idx):
+        idx = self.imgidx[idx]
+        s = self.imgrec.read_idx(idx)
+        header, img = mx.recordio.unpack(s)
+        label = header.label
+        if not isinstance(label, numbers.Number):
+            label = label[0]
+        label = torch.tensor(label, dtype=torch.long)
+        img = mx.image.imdecode(img).asnumpy()
+        img = self.transform(img)
+        return img, label
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--local_rank", type=int, default=0)
+    parser.add_argument("--world_size", type=int, default=8)
+    args = parser.parse_args()
+
+    torch.cuda.set_device(args.local_rank)
+    torch.distributed.init_process_group(backend="nccl")
+
+    train_dataset = MXFaceDataset(local_rank=args.local_rank)
+    train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset, shuffle=True)
+    train_loader = DataLoaderX(
+        local_rank=args.local_rank,
+        dataset=train_dataset,
+        batch_size=4,
+        sampler=train_sampler,
+        num_workers=2,
+        pin_memory=True,
+        drop_last=True
+    )
+
+    for img, label in train_loader:
+        print(img.shape)
+        print(label)
+
+```
+
+torch.cuda.set_device가 필수로 들어가야한다. 이거 없으면 nvidia-smi 명령어에서 볼 수 있듯, 0번 GPU에 8개가 추가로 들어간다. 아래 for 문에서 device가 0이 압도적으로 많다. 
+또한 하나의 서버에서 2개 이상의 DDP를 돌리지 말자. 왜인지는 모르겠으나 이미 돌아가는 코드가 종료됨.
