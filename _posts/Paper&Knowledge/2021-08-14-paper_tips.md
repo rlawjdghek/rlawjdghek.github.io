@@ -473,7 +473,8 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 5. Table 5 reports both the speed-up and compression rate obtained by various FitNets w.r.t. the teacher model <u>along with their number of layers, capacity and accuracies.</u> [FitNets: Hints For Thin Deep Nets.]
 => along with을 활용하는 문장.
 
-
+6. Even at the end of the training, as Figure 7h, the heatmap of EE + triplet loss still contains <u>a greater number of hard negative pairs than triplet loss does.</u> [Embedding Expansion: Augmentation in Embeggin Space for Deep Metric Learning]
+=> than 이후에 명사가 아닌 구가 온다. 비교하는 문장 적을때 사용하면 좋을듯.
 
 
 #### Discussion
