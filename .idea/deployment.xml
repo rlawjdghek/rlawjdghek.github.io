@@ -51,6 +51,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="Dash6-CVPR2022">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="Dash6-CVPR_KD">
         <serverdata>
           <mappings>
