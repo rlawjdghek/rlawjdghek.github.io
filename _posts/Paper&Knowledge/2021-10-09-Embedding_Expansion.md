@@ -54,8 +54,54 @@ $NMI(Y, C) = \frac{2 \times I(Y;C)}{\[H(Y) + H(C)\]}$ \
 ![](/assets/images/2021-10-09-Embedding_Expansion/8.PNG)의 NMI를 구해보자.
 위의 상황에서는 4가지만 구하면 된다.
 
-1. $H(Y|C=1) = -P(C=1) \sum P(Y=y | C=1) log(P(Y=y | C=1))$
-2. $H(Y|C=2)$
+$H(Y|C=1) = -P(C=1) \sum P(Y=y | C=1) log(P(Y=y | C=1))$ \
+$H(Y|C=2)$ \
+$H(Y)$ \
+$H(C)$ 
+
+
+복잡해지므로 $H(Y\|C=1)$ 만 구해보면, 
+$P(Y=1 | C=1) = \frac{3}{10}$, $P(Y=2 | C=1) = \frac{7}{10}$, $P(Y=3 | C=1) = \frac{0}{10}$이고,
+$H(Y | C=1) = -P(C=1) \sum_{y \in \{1, 2, 3\}} P(Y=y | C=1)log(P(Y=y | C=1)) $ \
+$ = - \frac{1}{2} \times \[\frac{3}{10}\ log(\frac{3}{10}) + \frac{0}{10}log(\frac{0}{10}) + \frac{7}{10}log(\frac{7}{10})] = 0.4406$
+이런 식으로 $H(Y|C=2)$를 구하고, entropy 구하는 식으로 $H(Y), H(C)$를 구하면 된다. $I(Y;C) = H(Y) - H(Y|C)$이고 대입.
+
+결과표는 논문 마지막에 있음. 
+
+### 2. Labels of Synthetic Points
+Synthetic point 사용의 장점은 이 점들은 이미 같은 클러스터에 있는 두점 사이의 보간된 값이기 때문에 그 클러스터에 들어갈 확률이 더 높다. 논문에서는 high degree라고 표현하는데, 이는 더 쉽게 분류될 수 있다는 것을 
+의미한다. 아래 그림은 synthetic data과 original data의 recall을 보여준다. synthetic이 더 높은것을 알 수 있다.  
+![](/assets/images/2021-10-09-Embedding_Expansion/3.PNG) 
+
+### 3. Impact of $L_2$ normalization
+interpolation point들을 hypersphere에 projection하는 효과를 보여줌. 
+![](/assets/images/2021-10-09-Embedding_Expansion/9.PNG)
+
+### 4. Impact of number of synthetic points
+적절한 synthetic point의 갯수를 보여준다. 2~8이 적당함. 왜 많이 쓰면 안좋아지는지 모르겟다.
+![](/assets/images/2021-10-09-Embedding_Expansion/4.PNG)
+
+### 5. Selection Ratio of Synthetic Points
+Interpolation point들이 hard negative sample로써 얼마나 선택되는지 보여줌. 훈련될 수록 cluster가 잘 형성된다. 따라서 interpolation된 데이터는 같은 클래스에 속하는
+두 샘플 사잇값이므로 점점 더 쉬운 데이터가 된다. 기하학적으로 생각해봐도 가장 edge에 있는 두 샘플이 다른 클러스터에 포함되는 point와 가장 가깝다는 것을 알 수 있다.
+![](/assets/images/2021-10-09-Embedding_Expansion/5.PNG)
+위의 그림에서 epoch이 지날수록 synthetic data가 hard negative로 선택되는 비율이 낮아지는 것을 볼 수 있다. 
+
+### 6. Effect of hard negative pair mining
+synthetic data가 epoch가 지날수록 더 hard sample이 되기는 어렵지만, 그래도 hard sample로 존재는 한다는 것을 알 수 있다. 이는 곧 기존 original point만 사용하는 것 보다 더 많은
+hard sample을 보유하고 있는 것이므로 이를 보여주기 위해 epoch이 지날수록 각 hard negative sample의 거리를 보여주었다.
+![](/assets/images/2021-10-09-Embedding_Expansion/6.PNG)
+위의 그림을 보면, 다른 클러스터끼리는 거리가 멀어야 하므로 파란색, 대각선은 빨간색이 나올수록 잘 분류된 것을 말한다. triplet loss만 사용한 모델은 너무 잘 분류하여 대각전 이외의 부분이 파란색으로 되어
+더이상 hard sample이 존재하지 않는다는 것을 보여준다. 반면, EE를 적용한 것은 노란색이 전체적으로 더 분포하는 것을 보여준다. 따라서 훈련이 진행되도 hard sample이 여전히 존재한다는 것을 알 수 있다. 
+
+### 7. Robustness
+더 hard한 negative sample을 사용함으로써 모델의 robustness가 증가했다는 것을 보여준다. Occlusion을 주고 그에 따른 성능을 그래프로 표현하였다. 
+![](/assets/images/2021-10-09-Embedding_Expansion/10.PNG) 
+
+### 8. Training speed and memory
+훈련 속도와 메모리 사용량을 비교한다. 단순 선형 보간 식이기 때문에 추가적인 자원 소모는 거의없다. 
+![](/assets/images/2021-10-09-Embedding_Expansion/7.PNG)
+
 
 
 
