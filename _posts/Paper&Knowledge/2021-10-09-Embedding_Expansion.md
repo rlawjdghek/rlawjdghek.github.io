@@ -53,6 +53,7 @@ log들은 2를 밑으로 가진다. \
 $NMI(Y, C) = \frac{2 \times I(Y;C)}{\[H(Y) + H(C)\]}$ \
 ![](/assets/images/2021-10-09-Embedding_Expansion/8.PNG)의 NMI를 구해보자.
 위의 상황에서는 4가지만 구하면 된다.
+
 1. $H(Y|C=1) = -P(C=1) \sum P(Y=y | C=1) log(P(Y=y | C=1))$
 2. $H(Y|C=2)$
 3. $H(Y)$
