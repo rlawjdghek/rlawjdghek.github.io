@@ -77,7 +77,9 @@ $L_a = \frac{\lambda}{r} log(1 + exp(-r \cdot (cos(\theta_y) - m_p) - b)) + \fra
 $g(z) = 2 (\frac{z+1}{2})^t - 1, z \in \[-1, 1\]$
 
 z에 들어가는 것은 $cos(\theta)$이고, 이는 $g(cos(\theta)) \in \[-1, 1\]$이다. 중요한 하이퍼파라미터 t가 분포의 범위를 조절한다. 함수 g를 t값에 대하여 비교하여 보면 아래 그림과 같다.
+
 ![](/assets/images/2021-10-27-SphereFace2/4.JPG)
+
 t가 증가할수록 경사가 심해지는 것을 생각하면, 위의 코사인 분포 그림 두번째, 세번째 그림과 같이 분포가 더 나누어지는 것을 볼 수 있다. 또한 negative sample 분포의 분산이 더 낮아지는 것을 볼 수 있다.
 
 ### Fianl loss function
