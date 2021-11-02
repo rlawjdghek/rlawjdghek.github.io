@@ -459,6 +459,9 @@ CE loss subject to labelled training data. [Knowledge Distillation by On-the-Fly
 $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augmentation in Embedding Space for Deep Metric Learning.]
 => Representation Learning 문장에 좋은 표현인듯.
 
+6. In the following section we display the practical benefits of our new algorithm, and we provide an <u>in-depth</u> comparison of its behaviour and that of traditional GANs. [WGAN]
+=> in-depth는 심도있게라는 표현. extentional experiment라는 표현이 진부할때 사용하면 좋을듯.
+
 #### Experimental Results
 
 1. Due to the space limitation, the detailed benchmark results of synthetic datasets <u>are tabulated</u> in Appendix D. [Revisiting time series outlier detection: definitions and benchmarks.]
