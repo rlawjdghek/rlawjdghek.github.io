@@ -385,7 +385,7 @@ estimator. [Contrastive Representation Distillation.] => "For example, ~" 같은
 
 #### Introduction
     
-1. CCTV surveilance and the facial recognition technology is <u>on its way</u> to becoming ubiquitous in large cities around the world. [Understanding the Privacy
+1. CCTV surveillance and the facial recognition technology is <u>on its way</u> to becoming ubiquitous in large cities around the world. [Understanding the Privacy
 of Facial Recognition Embeddings.]
 
 2. In this paper, <u>our goal is twofold</u>; we investigate ...
@@ -396,7 +396,7 @@ of Facial Recognition Embeddings.]
 4. However, <u>their unstructured nature</u> combined with the complexity and ambiguity of natural language <u>pose</u> a challenge when using radiology reports for clinical research and other downstream applications, 
 especially in settings with limited labeled data. [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
 
-5. We define a novel information extraction schema for radiology reports, <u>intended to cover modst climically relevant information with in the report while allowing for ease and consistency during annotation.</u> 
+5. We define a novel information extraction schema for radiology reports, <u>intended to cover modest climically relevant information with in the report while allowing for ease and consistency during annotation.</u> 
 [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
 
 6. <u>Along with these datasets</u>, there have been many advancements in NLP for the task of entiy and relation extraction. [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
@@ -482,7 +482,7 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 
 #### Discussion
 
-1. <u>Given that existing information extraction systems for radiology reports often suffer from a lack of report coverage,</uz> we measure the number of tokens and sentances in report sections covered by our schema.
+1. <u>Given that existing information extraction systems for radiology reports often suffer from a lack of report coverage,</u> we measure the number of tokens and sentances in report sections covered by our schema.
  [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
 
 
