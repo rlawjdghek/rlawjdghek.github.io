@@ -419,6 +419,9 @@ provided training samples and labels. [DIVA: Diverse Visual Feature Aggregation 
 13. Whereas the knowledge distillation enables utilizing the large network <u>in a condensed manner</u>, the inference on such large network, a.k.a. the teacher network, <u>becomes an ultimate burden of its 
 practical usages.</u> [Refine Myself by Teaching Myself: Feature Refinement via Self-Knowledge Distillation]
 
+14. Our normalization enjoys following favorable properties. [Spectral normalization for GAN]
+=> 진부하게 our main contributions are as follows 보다 나은듯.
+
 #### Background
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
