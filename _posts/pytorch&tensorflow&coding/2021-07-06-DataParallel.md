@@ -21,6 +21,7 @@ ICCV KD rebuttal 때 이미지넷 요청을 받았었는데 시간이 없어서 
 먼저 정리하자면, 분산처리에는 2가지 방법이 있고 파이토치에서는 크게 DataParallel과 Distributed.DataParallel이 있다. 하지만 Distributed.DataParallel이는 오류가 뜬다
 (어디선가 봤는데 사용하지 않는 파라미터가 있는 경우 오류 뜬다고 함). 따라서 nvidia에서 제공하는 apex를 썼다.
 
+# 모델 저장의 통일성을 위해서 모델을 저장할때 DP나 DDP로 저장할 경우에는 model.module.state_dict로 저장하도록 기억하자.
 
 ## 문제
 예를 들어 배치가 128이고 resnet101을 훈련시킨다고 하자. 속도의 향상, 또는 VRAM의 부족으로 인해 분산처리를 이용하여 훈련하려고 한다.
@@ -96,7 +97,7 @@ GPU 사용량
 
 * 여러 GPU를 사용할 때 서버 전체를 쓰면 좋겟지만 그렇지 못할 경우 GPU를 지정해 주어야 한다. 그럴때 쓰는 것이 os.environ["CUDA__VISIBLE_DEVICES"]로 이 
 머신(노드)에서 몇 번 GPU를 사용할 것이다 라고 명시.
-* local rank : 프로세스를 구분하기 위해 가장 많이 사용하는 변수. 이 변수는 cmd창에서
+* local rank : **프로세스를 구분하기 위해 가장 많이 사용하는 변수.** 이 변수는 cmd창에서
 ```bash
 python -m torch.distributed.launch --nproc_per_node=3 main.py
 ```
@@ -128,7 +129,7 @@ parser.add_argument("--local_rank", default=0, type=int)
 parser.add_argument("--world_size", default=3, type=int)
 args=parser.parse_args()
 print("local rank : {}".format(args.local_rank))
-torch.cuda.set_device(args.gpu)
+torch.cuda.set_device(args.local_rank)
 torch.distributed.init_process_group(backend="nccl")
 
 
@@ -137,7 +138,7 @@ sampler = DistributedSampler(train_dataset)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=128, sampler=sampler)
 
 model = torchvision.models.resnet101(pretrained=False).cuda(args.local_rank)
-model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], output_device=args.local_rank)
+model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], output_device=args.local_rank) # output_device는 default가 device_ids[0]이기 때문에 없어도 된다.
 
 optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
 criterion = torch.nn.CrossEntropyLoss()
@@ -161,6 +162,49 @@ for epoch in range(100):
             print(f"time : {time.time() - start}")
     print("epoch")
 ```
+
+### DistributedDataparallel의 모델 save
+프로세스가 여러개이기 때문에 local rank에 따라 다른 모델을 저장 할 수 있다. 하지만 낭비가 너무 심해지기 때문에 보통 마스터 프로세스 (local rank = 0)을 기준으로 모델을 저장하고,
+한 epoch가 끝날 때마다 마스터 프로세스에서 저장된 모델을 다른 모델과 동기화 해준다. 개별 프로세스마다 진행 속도가 거의 비슷하지만 다르기 때문에 마스터 프로세스가 모델을 저장하는 것이 
+다른 프로세스에서 불러오는 것보다 느리면 이는 다른 프로세스가 epoch를 날리는 것이기 때문에 반드시 마스터 프로세스가 현재 epoch에서 모델을 저장한 다음에 다른 하위 프로세스들이 load를 해야한다.
+이를 해주는 것이 dist.barrier()이다. 이 코드는 마스터 프로세스가 도달하기 전까지 다른 프로세스들의 진행을 멈춘다. 즉 순서를 정리 해보면,
+1. 마스터 프로세스가 현재 epoch의 모델 저장
+2. 먼저 진행되는 다른 프로세스들이 마스터 프로세스를 넘지 않도록 정지 dist.barrier
+3. 마스터 프로세스가 dist.barrier 까지 왔다는 것은 모델이 저장되었다는 것이므로 다른 프로세스들 모델 load
+4. 모델을 load 할때 map location으로 gpu:gpu 맞춰주기.
+아래 예시 코드를 보자
+
+```python
+import argparse
+
+import torch
+import torch.distributed as dist
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--local_rank", type=int, default=0)
+parser.add_argument("--world_size", type=int, default=4)
+args = parser.parse_args()
+
+dist.init_process_group(backend="nccl")
+torch.cuda.set_device(args.local_rank)
+
+model = torch.nn.Linear(10, 100).cuda(args.local_rank)
+model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank])
+
+for epoch in range(10):
+    to_path = f"./model_epoch{epoch}"
+    if args.local_rank==0:
+        torch.save(model.module.state_dict(), to_path)
+        print(f"{args.local_rank} model save")
+    dist.barrier()
+    model.module.load_state_dict(torch.load(to_path, map_localtion={"cuda:0": f"cuda:{args.local_rank}"}))
+    print(f"{args.local_rank} model load")
+```
+이 코드를 실행시키면 마스터 프로세스 (local rank=0)일 때에만 모델을 저장하고, 각 에폭에서 모델이 저장되기 전까지 dist.barrier()에 의하여 다른 하위 프로세스들은 load_state_dict 이전까지 멈춰있는다. 
+ 
+
+
+
 #### DistributedDataparallel을 사용 할 경우 반드시 알아야 할 것
 1. argparser에 local_rank를 추가
 2. gpu로 보낼때 반드시 local_rank에 맞춰 보내기
