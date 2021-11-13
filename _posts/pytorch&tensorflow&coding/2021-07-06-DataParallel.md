@@ -192,6 +192,8 @@ model = torch.nn.Linear(10, 100).cuda(args.local_rank)
 model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank])
 
 for epoch in range(10):
+    if args.local_rank == 0:
+        print("\nepoch: {epoch}")
     to_path = f"./model_epoch{epoch}"
     if args.local_rank==0:
         torch.save(model.module.state_dict(), to_path)
@@ -201,9 +203,8 @@ for epoch in range(10):
     print(f"{args.local_rank} model load")
 ```
 이 코드를 실행시키면 마스터 프로세스 (local rank=0)일 때에만 모델을 저장하고, 각 에폭에서 모델이 저장되기 전까지 dist.barrier()에 의하여 다른 하위 프로세스들은 load_state_dict 이전까지 멈춰있는다. 
- 
-
-
+즉, print 출력문에서 epoch 다음에 반드시 0 "model save" 이후에 "model load"가 뜬다.
+![](/assets/images/2021-07-07-DataParallel/6.JPG)
 
 #### DistributedDataparallel을 사용 할 경우 반드시 알아야 할 것
 1. argparser에 local_rank를 추가
