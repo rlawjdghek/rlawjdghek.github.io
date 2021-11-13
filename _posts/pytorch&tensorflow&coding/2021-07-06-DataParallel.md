@@ -27,7 +27,8 @@ ICCV KD rebuttal 때 이미지넷 요청을 받았었는데 시간이 없어서 
 예를 들어 배치가 128이고 resnet101을 훈련시킨다고 하자. 속도의 향상, 또는 VRAM의 부족으로 인해 분산처리를 이용하여 훈련하려고 한다.
 서버 컴이 다 돌아가고 있어서 순서 설명은 GPU4개를 이용하는 것으로 설명하였고, 실제 코드는 헷갈림을 방지 (n_world 가 같지 않도록) 고려하기 위해 GPU는 4개중 0,1,3 3개를 이용하는 것으로
 구현하였다. 기준 GPU는 0. 
-
+\
+\
 ### DataParallel
 1. 배치를 32씩 4개의 GPU에 할당한다. 
 2. resnet101 모델 전체를 각 GPU에 복사한다. 
@@ -89,7 +90,8 @@ for epoch in range(100):
 GPU 사용량
 ![](/assets/images/2021-07-07-DataParallel/2.JPG)
 주목할 점은 기준 0번 GPU가 더 많이 VRAM을 잡아 먹는 것과 PID가 모두 같다는 것이다.
-
+\
+\
 ### Distributed Dataparallel
 이 개념이 약간 생소했음. [미결] 이 알고리즘은 각 GPU마다 똑같이 복제된 모델이 어떻게 기준 GPU로 정보를 업데이트 하는지 완전히 이해를 못했다. 
 
@@ -162,7 +164,8 @@ for epoch in range(100):
             print(f"time : {time.time() - start}")
     print("epoch")
 ```
-
+\
+\
 ### DistributedDataparallel의 모델 save
 프로세스가 여러개이기 때문에 local rank에 따라 다른 모델을 저장 할 수 있다. 하지만 낭비가 너무 심해지기 때문에 보통 마스터 프로세스 (local rank = 0)을 기준으로 모델을 저장하고,
 한 epoch가 끝날 때마다 마스터 프로세스에서 저장된 모델을 다른 모델과 동기화 해준다. 개별 프로세스마다 진행 속도가 거의 비슷하지만 다르기 때문에 마스터 프로세스가 모델을 저장하는 것이 
@@ -194,27 +197,39 @@ model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_
 for epoch in range(10):
     if args.local_rank == 0:
         print("\nepoch: {epoch}")
-    to_path = f"./model_epoch{epoch}"
+    to_path = f"./model_epoch{epoch}.pth"
     if args.local_rank==0:
         torch.save(model.module.state_dict(), to_path)
         print(f"{args.local_rank} model save")
     dist.barrier()
-    model.module.load_state_dict(torch.load(to_path, map_localtion={"cuda:0": f"cuda:{args.local_rank}"}))
+    model.module.load_state_dict(torch.load(to_path, map_location={"cuda:0": f"cuda:{args.local_rank}"}))
     print(f"{args.local_rank} model load")
 ```
 이 코드를 실행시키면 마스터 프로세스 (local rank=0)일 때에만 모델을 저장하고, 각 에폭에서 모델이 저장되기 전까지 dist.barrier()에 의하여 다른 하위 프로세스들은 load_state_dict 이전까지 멈춰있는다. 
 즉, print 출력문에서 epoch 다음에 반드시 0 "model save" 이후에 "model load"가 뜬다.
 ![](/assets/images/2021-07-07-DataParallel/6.JPG)
-
-#### DistributedDataparallel을 사용 할 경우 반드시 알아야 할 것
+\
+\
+### DistributedDataparallel에서 validation
+validation 같은 경우에는 loader에서 sampler를 없이한다. 하지만 어차피 마스터 프로세스에서만 validation을 하는 것이 의미가 있으므로 (성능이 안나올 때에는 다 해서 베스트 뽑는 것이 좋다.)
+local rank가 0일때만 진행하면 CPU 부하가 적게 걸려 효율적이다. 하지만 마스터 프로세스에서만 validation 함수를 실행시키면 validation을 안하는 하위 프로세스는 barrier에서 기다리고 있고, 마스터 프로세스가
+validation을 마친후 모델을 저장하고 barrier로 도착 한뒤에 그 다음부터 코드가 멈춰버린다. 이는 다른 프로세스들과 마스터 프로세스의 연산이 다르게 진행되어 그러는 것으로 보인다. 따라서 
+**마스터 프로세스만 단독적으로 어떤 추론을 진행하는 경우 model.module(img) 처럼 module을 따로 빼서 진행해 주어야한다.** 
+\
+\
+### DistributedDataparallel을 사용 할 경우 반드시 알아야 할 것
 1. argparser에 local_rank를 추가
 2. gpu로 보낼때 반드시 local_rank에 맞춰 보내기
 3. DistributedSampler 추가
-4. world_size는 별개이지만 GPU총 갯수를 헷갈리지 않게 하기 위해 넣는다. 
+4. world_size는 별개이지만 GPU총 갯수를 헷갈리지 않게 하기 위해 넣는다.
+5. 에폭이 끝난 다음에 동기화 하기 위해 checkpoint를 만들고 barrier를 사용하여 save and load 한다. 
+6. validation할떄에는 module을 해야 barrier에서 에러가 안난다.
 ![](/assets/images/2021-07-07-DataParallel/3.JPG)
+
 결과를 보면 아까와 달리 전부다 같은 양의 메모리를 차지하는 것을 볼 수 있다. 하지만 PID는 모두 다르다.
  즉, 개별적으로 실행되고 있는 코드들이다. 아까보다 훨씬 더 많은 메모리를 차지하는 것을 볼 수 있다. 
-
+\
+\
 ### Distributed DataParallel (apex)
 예제 코드는 쉬운 코드라 잘 돌아가는 것을 확인할 수 있는데 토치에서 지원하는 Distribute는 모델에서 안 쓰는 매개변수가 있을 경우 오류가 뜬다고 한다. 그래서 추가적으로 알아본 것. 
 
@@ -274,7 +289,8 @@ for epoch in range(100):
 ![](/assets/images/2021-07-07-DataParallel/5.JPG)
 <strike>하지만 문제는 실제 KD 이미지넷 코드를 돌릴 경우 num_workers=0아니면 only to child process 에러가 뜬다. 아직 방법을 찾지는 못함.</strike> 
 (+2021-10-08에 추가한 아래 코드 보고 나중에 해보자. 아래코드는 num_worker가 있어도 된다.)
-
+\
+\
 ### apex + amp
 amp는 mixed_precision이라는 것을 사용하여 쓸데없는 계산 량을 줄이고 성능 차이는 거의 안나게 하는 패키지.
 
@@ -386,7 +402,8 @@ for epoch in range(100):
     print("epoch")
 ```
 위의 코드에서 opt_level만 바꾸면 된다. 알아본 바로는 O1을 가장 많이 쓴다고 하는데 정확히 무슨 차이가 있는지는 모르겟다. 또한 내 실험 결과에서는 O1이 기존보다 더 느리게 떳다. 
-
+\
+\
 ### 실행 속도 비교
 **위의 코드를 돌렸을때 20iter마다 찍힌 실행 시간.**
 Dataparallel : 5.6 -> 9.2 -> 12.8 -> 16.3 -> 20.4
@@ -409,6 +426,8 @@ nn.DistDataparallel O3: 0.3 -> 2.2 -> 4.0 -> 6.0 -> 8.0
 
 
 + 2021-07-10
+\
+\
 ### torch amp
 위의 apex의 amp대안으로 파이토치에서 제공하는 amp를 사용해보자. 나중에 시간있으면 이것도 위에처럼 ablation 해보기. 
 방법은 아래 코드처럼 scaler만들고, with autocast로 forward부분만 묶어주면 된다.
