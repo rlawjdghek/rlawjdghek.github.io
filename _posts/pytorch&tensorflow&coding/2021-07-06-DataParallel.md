@@ -214,7 +214,7 @@ for epoch in range(10):
 validation 같은 경우에는 loader에서 sampler를 없이한다. 하지만 어차피 마스터 프로세스에서만 validation을 하는 것이 의미가 있으므로 (성능이 안나올 때에는 다 해서 베스트 뽑는 것이 좋다.)
 local rank가 0일때만 진행하면 CPU 부하가 적게 걸려 효율적이다. 하지만 마스터 프로세스에서만 validation 함수를 실행시키면 validation을 안하는 하위 프로세스는 barrier에서 기다리고 있고, 마스터 프로세스가
 validation을 마친후 모델을 저장하고 barrier로 도착 한뒤에 그 다음부터 코드가 멈춰버린다. 이는 다른 프로세스들과 마스터 프로세스의 연산이 다르게 진행되어 그러는 것으로 보인다. 따라서 
-**마스터 프로세스만 단독적으로 어떤 추론을 진행하는 경우 model.module(img) 처럼 module을 따로 빼서 진행해 주어야한다.** 
+마스터 프로세스만 단독적으로 어떤 추론을 진행하는 경우 model.module(img) 처럼 module을 따로 빼서 진행해 주어야한다. **하지만 GPU에 문제생길수 있으니 그냥 모든 프로세스 다 validation하자. 어차피 CPU차이 거의 없다.** 
 \
 \
 ### DistributedDataparallel을 사용 할 경우 반드시 알아야 할 것
