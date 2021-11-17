@@ -5,7 +5,7 @@ categories:
   - Paper & Knowledge
   
 tags:
-  - GAN
+  - KD, Super Resolution
  
 published: True
 toc: true
