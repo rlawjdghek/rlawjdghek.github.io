@@ -2,6 +2,13 @@
 <project version="4">
   <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
+      <paths name="DASH10-CECT">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="DASH3-AAAI_KD">
         <serverdata>
           <mappings>
@@ -30,6 +37,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="DASH6-ICML_2022">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="DASH9-CVPR2022">
         <serverdata>
           <mappings>
@@ -37,14 +51,7 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="jeonghokim@10.201.134.136:22 password">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="jeonghokim@10.201.134.140:22">
+      <paths name="DASH9-emojigan">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
