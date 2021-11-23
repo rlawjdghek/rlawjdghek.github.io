@@ -1,6 +1,6 @@
 ---
-title:  "pytorch model.train(), eval()"
-excerpt: "pytorch model.train(), eval()"
+title:  "pytorch lr schuduler"
+excerpt: "pytorch lr schuduler"
 categories:
   - Pytorch & Tensorflow & Coding
   
