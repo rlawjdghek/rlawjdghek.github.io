@@ -16,6 +16,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="DASH3-AIM5002">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="DASH4-rlawjdghek">
         <serverdata>
           <mappings>
@@ -51,6 +58,20 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="DASH6-ICML_2022_2">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="DASH6-ICML_2022_3">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="DASH9-CVPR2022">
         <serverdata>
           <mappings>
@@ -59,13 +80,6 @@
         </serverdata>
       </paths>
       <paths name="DASH9-emojigan">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="jeonghokim@10.201.134.136:22 password">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
