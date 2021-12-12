@@ -427,8 +427,15 @@ low-resource devices, such as smartphones and wearable gadgets.</u> [Data-Distor
 => model compression introduction에 어울리는 문장.
 
 16. To better train a small network, model distillation, i.e., <u>*teacher-to-student* mechanism that directly trains a student network to inherit the knowledge (e.g., class probabilities), logits,
-intermediate feature maps, attention map of a deeper or more complex teacher network</u >, has been introduced.
+intermediate feature maps, attention map of a deeper or more complex teacher network</u >, has been introduced. [Data-Distortion Guided Self-Distillation for Deep Neural Networks.]
 => model compression introduction에 어울리는 문장. 
+
+17. It remains unclear how a teacher model boost another model <u>in principle.</u> [Data-Distortion Guided Self-Distillation for Deep Neural Networks.]
+=> "in principle"이라는 표현, 대체적으로, 원론적으로, 이론상으로는 이라는 뜻으로, 사용하면 좋은 듯. 
+
+
+
+
 #### Background
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
