@@ -422,6 +422,10 @@ practical usages.</u> [Refine Myself by Teaching Myself: Feature Refinement via 
 14. Our normalization enjoys following favorable properties. [Spectral normalization for GAN]
 => 진부하게 our main contributions are as follows 보다 나은듯.
 
+15. However, stat-of-the-art models usually involve very deep networks with tremendous parameters and a large number of floating point operations, <u>which hinders them from real-world applications on 
+low-resource devices, such as smartphones and wearable gadgets.</u>
+=> model compression introduction에 어울리는 문장.
+
 #### Background
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
