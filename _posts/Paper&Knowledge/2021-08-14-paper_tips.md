@@ -433,7 +433,7 @@ intermediate feature maps, attention map of a deeper or more complex teacher net
 17. It remains unclear how a teacher model boost another model <u>in principle.</u> [Data-Distortion Guided Self-Distillation for Deep Neural Networks.]
 => "in principle"이라는 표현, 대체적으로, 원론적으로, 이론상으로는 이라는 뜻으로, 사용하면 좋은 듯. 
 
-
+18. 
 
 
 #### Background
