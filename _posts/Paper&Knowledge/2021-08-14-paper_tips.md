@@ -433,11 +433,12 @@ intermediate feature maps, attention map of a deeper or more complex teacher net
 17. It remains unclear how a teacher model boost another model <u>in principle.</u> [Data-Distortion Guided Self-Distillation for Deep Neural Networks.]
 => "in principle"이라는 표현, 대체적으로, 원론적으로, 이론상으로는 이라는 뜻으로, 사용하면 좋은 듯. 
 
-18. These shortages motivate us to ~~~. [Data-Distortion Guided Self-Distillation for Deep Neural Networks.]
+18. These shortages motivate us to develop a new mechanism that directly optimizes student network to reach a more desired solution from the raw training data without going
+through another teacher or intermediate network. [Data-Distortion Guided Self-Distillation for Deep Neural Networks.]
 => 왜 이런 생각을 하게 되었나. motivation 늘릴때 좋은 표현. 
 
 
-#### Background
+#### Bzackground
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
 
