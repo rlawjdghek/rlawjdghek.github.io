@@ -39,7 +39,39 @@ peer-teaching == online-KD는 결국 teacher의 성능을 크로스 엔트로피
 1. 전체 훈련 프로세스가 굉장히 비싸다. 만약 teacher의 모델이 student보다 10배가 크다면 모델을 훈련하는데에 10배의 cost가 더 든다.
 2. 만약 어떤 task에서 teacher 모델이 overfitting된다면, teacher를 사용할 수 없다.
 3. teacher 모델이 어떻게 student의 성능을 부스팅 하는지 명확하지 않다. student가 단순히 teacher의 성능을 따라한다고 하는 것은 맞지만, teacher가 어떤 이미지에 대해서 틀린 예측을 했다고 할 때, 이것이 항상 옳다고 할 수 없다.
-4. 
+
+# Method
+전체적인 훈련과정을 정리하면 아래와 같다.
+1. data augmentation을 통하여 훈련 데이터를 2개로 나눈다.
+2. 하나의 global feature extraction으로 representation vector를 얻는다.
+3. MMD metric으로 두 데이터의 차이를 줄인다.
+4. FC layer와 softmax를 거쳐 두 확률 분포를 얻는다.
+5. KL Divergence를 양쪽 모두 해준다.
+
+### The MMD metric for global feature distributions
+![](/assets/images/2021-12-13-Data_distribution_self-KD/2.JPG)
+논문에서는 기존에는 잘 사용하지 않는 MMD metirc을 소개하였다. 앞에서 소개한 model capacity를 결정하는 feature distribution에 해당하는 것인데, 입력 데이터가 약간 다르므로, 이를 일정하게 맞춰주는 constraint이다.
+공식은 아래와 같다. 
+![](/assets/images/2021-12-13-Data_distribution_self-KD/1.JPG)
+
+다음으로 KLDiv 로스.
+![](/assets/images/2021-12-13-Data_distribution_self-KD/3.JPG)
+마지막으로 크로스 엔트로피
+![](/assets/images/2021-12-13-Data_distribution_self-KD/4.JPG)
+
+위의 손실함수를 모두 두 쌍에 대해서 계산하면 아래와 같다.
+![](/assets/images/2021-12-13-Data_distribution_self-KD/5.JPG)
+하이퍼 파라미터 $\lambda=1, \mu=0.0001~0.0005$을 사용하였다. 
+
+# Experiment
+실험은 19년도 논문에 비해 빈약한 편이다. CIFAR-10, CIFAR-100, ImageNet에 대한것이 끝. 또한 비교가 다른 모델과 분명하게 이루어진 것도 아니고 단순 베이스라인 (크로스 엔트로피만 사용)과 비교하였다. 
+$\mu$는 consistent global feature를 강조하는 파라미터이지만 저자들은 이를 단순 regularizer로써만 바라본다. logit이 같아지는 것은 굉장한 제약이기 때문에 가중치도 매우 작다는 것을 알 수 있다.
+
+# Ablation studies
+![](/assets/images/2021-12-13-Data_distribution_self-KD/6.JPG)
+이 논문에서 주목할 만한 손실함수는 MMD와 KL이므로 이 두개를 중간에 넣어 비교하였다. 또한 위의 표에서 이 두 손실함수가 없는 two-branch에서는 오히려 resnet32의 성능이 낮아진 것을 비추어 볼 때, 단순 feature extractor를 공유하는 것은
+성능향상에 도움이 되지 않는 다는 것을 알 수 있다. 
+
 
 
  
