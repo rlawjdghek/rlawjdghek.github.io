@@ -126,55 +126,79 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python -m torch.distributed.launch --nproc_per_node
 ```
 각 GPU마다 프로세스가 독립적으로 생성되어 돌아간다고 생각하자.
 ```python
-import torch
-import torchvision
-import torchvision.transforms as T
-import argparse
-import time
-from torch.utils.data.distributed import DistributedSampler
-
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,3"
+import argparse
+
+import torch
+from torch.utils.data import DataLoader
+from torch.utils.data.distributed import DistributedSampler
+import torch.distributed as dist
+import torchvision
+import torchvision.transforms as T
+from torch.cuda.amp import GradScaler, autocast
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--local_rank", type=int, default=0)
-parser.add_argument("--world_size", type=int, default=3)
+#### training ####
 parser.add_argument("--batch_size", type=int, default=128)
-args=parser.parse_args()
-args.batch_size = args.batch_size // args.world_size
-print("local rank : {}".format(args.local_rank))
+parser.add_argument("--n_workers", type=int, default=4)
+parser.add_argument("--lr", type=float, default=0.01)
+parser.add_argument("--n_epochs", type=int, default=100)
+
+#### configs ####
+parser.add_argument("--local_rank", type=int, default=0)
+parser.add_argument("--world_size", type=int)
+parser.add_argument("--DDP_backend", type=str, default="nccl")
+
+args = parser.parse_args()
+assert args.batch_size > torch.cuda.device_count(), \
+    f"batch size ({args.batch_size}) must be greater than # gpus ({torch.cuda.device_count()})"
+assert args.n_workers > torch.cuda.device_count(), \
+    f"# workers ({args.n_workers}) must be greater than # gpus ({torch.cuda.device_count()})"
+args.batch_size = args.batch_size // torch.cuda.device_count()
+args.n_workers = args.n_workers // torch.cuda.device_count()
+
 torch.cuda.set_device(args.local_rank)
-torch.distributed.init_process_group(backend="nccl")
+dist.init_process_group(backend=args.DDP_backend, world_size=args.world_size, rank=args.local_rank)
 
+train_dataset = torchvision.datasets.CIFAR100(root="/home/data", download=True, transform=T.ToTensor(), train=True)
+valid_dataset = torchvision.datasets.CIFAR100(root="/home/data", download=True, transform=T.ToTensor(), train=False)
+train_sampler = DistributedSampler(train_dataset)
+train_loader = DataLoader(train_dataset, batch_size=args.batch_size, num_workers=args.n_workers,
+                          sampler=train_sampler)
+valid_loader = DataLoader(valid_dataset, batch_size=args.batch_size, num_workers=args.n_workers)
 
-train_dataset = torchvision.datasets.CIFAR100(root="./data", download=True, transform=T.ToTensor())
-sampler = DistributedSampler(train_dataset)
-train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=128, sampler=sampler)
+model = torchvision.models.resnet18(num_classes=100).cuda(args.local_rank)
+model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], output_device=args.local_rank)
 
-model = torchvision.models.resnet101(pretrained=False).cuda(args.local_rank)
-model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], output_device=args.local_rank) # output_device는 default가 device_ids[0]이기 때문에 없어도 된다.
+optimizer = torch.optim.SGD(model.parameters(), lr = args.lr)
+criterion_CE = torch.nn.CrossEntropyLoss()
+scaler = GradScaler()
 
-optimizer = torch.optim.SGD(model.parameters(), lr = 0.01)
-criterion = torch.nn.CrossEntropyLoss()
-
-
-for epoch in range(100):
-    start = time.time()
-    for n, (img, label) in enumerate(train_loader):
+for epoch in range(1, args.n_epochs+1):
+    for img, label in train_loader:
         img = img.cuda(args.local_rank)
         label = label.cuda(args.local_rank)
 
-
-        output = model(img)
-        loss = criterion(output, label)
+        with autocast():
+            output = model(img)
+            loss = criterion_CE(output, label)
         optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()
+    n_correct = 0
+    for img, label in valid_loader:
+        img = img.cuda(args.local_rank)
+        label = label.cuda(args.local_rank)
 
-        if n % 20 == 0:
-            print(f"[{n}/{len(train_loader)}]")
-            print(f"time : {time.time() - start}")
-    print("epoch")
+        with autocast():
+            output = model(img)
+            loss = criterion_CE(output, label)
+        pred = torch.argmax(output, dim=1)
+        n_correct += (pred == label).float().sum()
+    if args.local_rank == 0:
+        print(f"[Epoch-{epoch}]_[Acc-{n_correct / len(valid_dataset)}]")
 ```
 ![](/assets/images/2021-07-07-DataParallel/3.JPG)
 
