@@ -97,8 +97,10 @@ GPU 사용량
 <br/>
 ### Distributed Dataparallel
 이 개념이 약간 생소했음. [미결] 이 알고리즘은 각 GPU마다 똑같이 복제된 모델이 어떻게 기준 GPU로 정보를 업데이트 하는지 완전히 이해를 못했다. **하지만 배치사이즈는 동일하게 나누어서 들어가기 때문에 DP와 비슷하다고 볼 수 있다. 
-또한 DataLoader에 들어가는 num_workers값도 DP와 달리 프로세스 당 몇개씩 들어가므로 이 연산도 한다. 나는 보통 맨 처음에 argparse로 받는 n_workers는 전체 worker의 갯수로 잡고 코드내에서 나누어준다. 보통은 1개 프로세스당
-** 
+또한 DataLoader에 들어가는 num_workers값도 DP와 달리 프로세스 당 몇개씩 들어가므로 이 연산도 한다. 나는 보통 맨 처음에 argparse로 받는 n_workers는 전체 worker의 갯수로 잡고 코드내에서 나누어준다. 보통은 1개 프로세스당 
+4개를 사용함.**<br/>
+\* DDP를 사용할 때에는 기본적으로 multiprocessing을 기반으로 하기때문에 주피터에서는 사용할 수 없다. 또한 torch.multiprocessing의 spawn함수를 사용할 수도 있는데, 구글링 결과로는 이 방법보다 파이토치에서 지원하는
+torch.distributed.launch로 실행시키는 것이 확장성도 더 좋고, 속도면에서도 안정성이 있다고 한다. 따라서 본 포스팅에서는 spawn함수를 사용하지 않는다. 
 
 용어 및 개념 정리
 
