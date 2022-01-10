@@ -94,7 +94,7 @@ for epoch in range(100):
 GPU 사용량
 ![](/assets/images/2021-07-07-DataParallel/2.JPG)
 주목할 점은 기준 0번 GPU가 더 많이 VRAM을 잡아 먹는 것과 PID가 모두 같다는 것이다.
-\
+<br/>
 ### Distributed Dataparallel
 이 개념이 약간 생소했음. [미결] 이 알고리즘은 각 GPU마다 똑같이 복제된 모델이 어떻게 기준 GPU로 정보를 업데이트 하는지 완전히 이해를 못했다. **하지만 배치사이즈는 동일하게 나누어서 들어가기 때문에 DP와 비슷하다고 볼 수 있다. 
 또한 DataLoader에 들어가는 num_workers값도 DP와 달리 프로세스 당 몇개씩 들어가므로 이 연산도 한다. 나는 보통 맨 처음에 argparse로 받는 n_workers는 전체 worker의 갯수로 잡고 코드내에서 나누어준다. 보통은 1개 프로세스당
@@ -204,56 +204,128 @@ for epoch in range(1, args.n_epochs+1):
 
 결과를 보면 아까와 달리 전부다 같은 양의 메모리를 차지하는 것을 볼 수 있다. 하지만 PID는 모두 다르다.
  즉, 개별적으로 실행되고 있는 코드들이다. 아까보다 훨씬 더 많은 메모리를 차지하는 것을 볼 수 있다. 
-\
+<br/>
+<br/>
 ### DistributedDataparallel의 모델 save
 프로세스가 여러개이기 때문에 local rank에 따라 다른 모델을 저장 할 수 있다. 하지만 낭비가 너무 심해지기 때문에 보통 마스터 프로세스 (local rank = 0)을 기준으로 모델을 저장하고,
 한 epoch가 끝날 때마다 마스터 프로세스에서 저장된 모델을 다른 모델과 동기화 해준다. 개별 프로세스마다 진행 속도가 거의 비슷하지만 다르기 때문에 마스터 프로세스가 모델을 저장하는 것이 
 다른 프로세스에서 불러오는 것보다 느리면 이는 다른 프로세스가 epoch를 날리는 것이기 때문에 반드시 마스터 프로세스가 현재 epoch에서 모델을 저장한 다음에 다른 하위 프로세스들이 load를 해야한다.
 이를 해주는 것이 dist.barrier()이다. 이 코드는 마스터 프로세스가 도달하기 전까지 다른 프로세스들의 진행을 멈춘다. 즉 순서를 정리 해보면,
-1. 마스터 프로세스가 현재 epoch의 모델 저장
+1. 마스터 프로세스가 현재 epoch의 모델 저장 (베스트 모델 저장하는 것과 별개로 체크포인트로 저장).
 2. 먼저 진행되는 다른 프로세스들이 마스터 프로세스를 넘지 않도록 정지 dist.barrier
 3. 마스터 프로세스가 dist.barrier 까지 왔다는 것은 모델이 저장되었다는 것이므로 다른 프로세스들 모델 load
 4. 모델을 load 할때 map location으로 gpu:gpu 맞춰주기.
-아래 예시 코드를 보자
+위의 예시 코드의 마지막 부분에 추가된 부분을 주의해서 보자.
 
 ```python
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,3"
+import os.path import join as opj
 import argparse
 
 import torch
+from torch.utils.data import DataLoader
+from torch.utils.data.distributed import DistributedSampler
 import torch.distributed as dist
+import torchvision
+import torchvision.transforms as T
+from torch.cuda.amp import GradScaler, autocast
 
 parser = argparse.ArgumentParser()
+#### training ####
+parser.add_argument("--batch_size", type=int, default=128)
+parser.add_argument("--n_workers", type=int, default=4)
+parser.add_argument("--lr", type=float, default=0.01)
+parser.add_argument("--n_epochs", type=int, default=100)
+
+#### save & load ####
+parser.add_argument("--save_root_dir", type=str, default="/home/jeonghokim/dummy")
+
+#### configs ####
 parser.add_argument("--local_rank", type=int, default=0)
-parser.add_argument("--world_size", type=int, default=4)
+parser.add_argument("--world_size", type=int)
+parser.add_argument("--DDP_backend", type=str, default="nccl")
+
 args = parser.parse_args()
+args.save_model_dir = opj(args.save_root_dir, "save_models")
+os.makedirs(args.save_model_dir, exist_ok=True)
 
-dist.init_process_group(backend="nccl")
+assert args.batch_size > torch.cuda.device_count(), \
+    f"batch size ({args.batch_size}) must be greater than # gpus ({torch.cuda.device_count()})"
+assert args.n_workers > torch.cuda.device_count(), \
+    f"# workers ({args.n_workers}) must be greater than # gpus ({torch.cuda.device_count()})"
+args.batch_size = args.batch_size // torch.cuda.device_count()
+args.n_workers = args.n_workers // torch.cuda.device_count()
+
 torch.cuda.set_device(args.local_rank)
+dist.init_process_group(backend=args.DDP_backend, world_size=args.world_size, rank=args.local_rank)
 
-model = torch.nn.Linear(10, 100).cuda(args.local_rank)
-model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank])
+train_dataset = torchvision.datasets.CIFAR100(root="/home/data", download=True, transform=T.ToTensor(), train=True)
+valid_dataset = torchvision.datasets.CIFAR100(root="/home/data", download=True, transform=T.ToTensor(), train=False)
+train_sampler = DistributedSampler(train_dataset)
+train_loader = DataLoader(train_dataset, batch_size=args.batch_size, num_workers=args.n_workers,
+                          sampler=train_sampler)
+valid_loader = DataLoader(valid_dataset, batch_size=args.batch_size, num_workers=args.n_workers)
 
-for epoch in range(10):
+model = torchvision.models.resnet18(num_classes=100).cuda(args.local_rank)
+model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank], output_device=args.local_rank)
+
+optimizer = torch.optim.SGD(model.parameters(), lr = args.lr)
+criterion_CE = torch.nn.CrossEntropyLoss()
+scaler = GradScaler()
+best_acc = 0
+
+for epoch in range(1, args.n_epochs+1):
+    for img, label in train_loader:
+        img = img.cuda(args.local_rank)
+        label = label.cuda(args.local_rank)
+
+        with autocast():
+            output = model(img)
+            loss = criterion_CE(output, label)
+        optimizer.zero_grad()
+        scaler.scale(loss).backward()
+        scaler.step(optimizer)
+        scaler.update()
+    n_correct = 0
+    for img, label in valid_loader:
+        img = img.cuda(args.local_rank)
+        label = label.cuda(args.local_rank)
+
+        with autocast():
+            output = model(img)
+            loss = criterion_CE(output, label)
+        pred = torch.argmax(output, dim=1)
+        n_correct += (pred == label).float().sum()
+
     if args.local_rank == 0:
-        print("\nepoch: {epoch}")
-    to_path = f"./model_epoch{epoch}.pth"
-    if args.local_rank==0:
-        torch.save(model.module.state_dict(), to_path)
-        print(f"{args.local_rank} model save")
-    dist.barrier()
-    model.module.load_state_dict(torch.load(to_path, map_location={"cuda:0": f"cuda:{args.local_rank}"}))
+        acc = n_correct / len(valid_dataset)
+        print(f"[Epoch-{epoch}]_[Acc-{acc}]")
+        if best_acc < acc:
+            print(f"best accuracy update : {best_acc} -> {acc}")
+            best_acc = acc
+            save_path = opj(args.save_model_dir, f"[Epoch-{epoch}]_[acc-{best_acc:.4f}]")
+            torch.save(model.module.state_dict(), save_path)
+
+    cp_path = opj(args.save_model_dir, "cp.pth")
+    if args.local_rank == 0:
+        torch.save(model.module.state_dict(), cp_path)
+    dist.barrier()  # 메인 프로레스의 모델을 load하기 위해 메인 프로세스가 save하기까지 기다림
+    model.module.load_state_dict(torch.load(cp_path, map_location={"cuda:0":f"cuda:{args.local_rank}"}))
     print(f"{args.local_rank} model load")
 ```
 이 코드를 실행시키면 마스터 프로세스 (local rank=0)일 때에만 모델을 저장하고, 각 에폭에서 모델이 저장되기 전까지 dist.barrier()에 의하여 다른 하위 프로세스들은 load_state_dict 이전까지 멈춰있는다. 
 즉, print 출력문에서 epoch 다음에 반드시 0 "model save" 이후에 "model load"가 뜬다.
 ![](/assets/images/2021-07-07-DataParallel/6.JPG)
-\
+<br/>
+<br/>
 ### DistributedDataparallel에서 validation
 validation 같은 경우에는 loader에서 sampler를 없이한다. 하지만 어차피 마스터 프로세스에서만 validation을 하는 것이 의미가 있으므로 (성능이 안나올 때에는 다 해서 베스트 뽑는 것이 좋다.)
 local rank가 0일때만 진행하면 CPU 부하가 적게 걸려 효율적이다. 하지만 마스터 프로세스에서만 validation 함수를 실행시키면 validation을 안하는 하위 프로세스는 barrier에서 기다리고 있고, 마스터 프로세스가
 validation을 마친후 모델을 저장하고 barrier로 도착 한뒤에 그 다음부터 코드가 멈춰버린다. 이는 다른 프로세스들과 마스터 프로세스의 연산이 다르게 진행되어 그러는 것으로 보인다. 따라서 
 마스터 프로세스만 단독적으로 어떤 추론을 진행하는 경우 model.module(img) 처럼 module을 따로 빼서 진행해 주어야한다. **하지만 GPU에 문제생길수 있으니 그냥 모든 프로세스 다 validation하자. 어차피 CPU차이 거의 없다.** 
-\
+<br/>
+<br/>
 ### DistributedDataparallel을 사용 할 경우 반드시 알아야 할 것 (정리)
 1. argparser에 local_rank를 추가
 2. gpu로 보낼때 반드시 local_rank에 맞춰 보내기
@@ -326,8 +398,8 @@ for epoch in range(100):
 ![](/assets/images/2021-07-07-DataParallel/5.JPG)
 <strike>하지만 문제는 실제 KD 이미지넷 코드를 돌릴 경우 num_workers=0아니면 only to child process 에러가 뜬다. 아직 방법을 찾지는 못함.</strike> 
 (+2021-10-08에 추가한 아래 코드 보고 나중에 해보자. 아래코드는 num_worker가 있어도 된다.)
-\
-\
+<br/>
+<br/>
 ### apex + amp
 amp는 mixed_precision이라는 것을 사용하여 쓸데없는 계산 량을 줄이고 성능 차이는 거의 안나게 하는 패키지.
 
@@ -439,8 +511,8 @@ for epoch in range(100):
     print("epoch")
 ```
 위의 코드에서 opt_level만 바꾸면 된다. 알아본 바로는 O1을 가장 많이 쓴다고 하는데 정확히 무슨 차이가 있는지는 모르겟다. 또한 내 실험 결과에서는 O1이 기존보다 더 느리게 떳다. 
-\
-\
+<br/>
+<br/>
 ### 실행 속도 비교
 **위의 코드를 돌렸을때 20iter마다 찍힌 실행 시간.**
 Dataparallel : 5.6 -> 9.2 -> 12.8 -> 16.3 -> 20.4
@@ -463,8 +535,8 @@ nn.DistDataparallel O3: 0.3 -> 2.2 -> 4.0 -> 6.0 -> 8.0
 
 
 + 2021-07-10
-\
-\
+<br/>
+<br/>
 ### torch amp
 위의 apex의 amp대안으로 파이토치에서 제공하는 amp를 사용해보자. 나중에 시간있으면 이것도 위에처럼 ablation 해보기. 
 방법은 아래 코드처럼 scaler만들고, with autocast로 forward부분만 묶어주면 된다.
@@ -647,39 +719,4 @@ if __name__ == "__main__":
         print(label)
 
 ```
-
 torch.cuda.set_device가 필수로 들어가야한다. 이거 없으면 nvidia-smi 명령어에서 볼 수 있듯, 0번 GPU에 8개가 추가로 들어간다. 아래 for 문에서 device가 0이 압도적으로 많다. 
-
-
-가나다
-\
-\
-\
-\
-\
-zxc
-
-qwe\
-\
-qwe
-
-asd
-\
-\
-\
-\
-\
-asd
-
-asdasd  
-  
-    
-    
-asdasd
-
-하하하  
-\  
-\   
-\   
-\   
-하하하
