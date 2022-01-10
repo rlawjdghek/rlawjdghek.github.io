@@ -91,7 +91,7 @@ GPU 사용량
 주목할 점은 기준 0번 GPU가 더 많이 VRAM을 잡아 먹는 것과 PID가 모두 같다는 것이다.
 \
 ### Distributed Dataparallel
-이 개념이 약간 생소했음. [미결] 이 알고리즘은 각 GPU마다 똑같이 복제된 모델이 어떻게 기준 GPU로 정보를 업데이트 하는지 완전히 이해를 못했다. 
+이 개념이 약간 생소했음. [미결] 이 알고리즘은 각 GPU마다 똑같이 복제된 모델이 어떻게 기준 GPU로 정보를 업데이트 하는지 완전히 이해를 못했다. **하지만 배치사이즈는 동일하게 나누어서 들어가기 때문에 DP와 비슷하다고 볼 수 있다.** 
 
 용어 및 개념 정리
 
@@ -119,15 +119,15 @@ import argparse
 import time
 from torch.utils.data.distributed import DistributedSampler
 
-
-
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,3"
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--local_rank", default=0, type=int)
-parser.add_argument("--world_size", default=3, type=int)
+parser.add_argument("--local_rank", type=int, default=0)
+parser.add_argument("--world_size", type=int, default=3)
+parser.add_argument("--batch_size", type=int, default=128)
 args=parser.parse_args()
+args.batch_size = args.batch_size // args.world_size
 print("local rank : {}".format(args.local_rank))
 torch.cuda.set_device(args.local_rank)
 torch.distributed.init_process_group(backend="nccl")
@@ -608,3 +608,18 @@ if __name__ == "__main__":
 
 torch.cuda.set_device가 필수로 들어가야한다. 이거 없으면 nvidia-smi 명령어에서 볼 수 있듯, 0번 GPU에 8개가 추가로 들어간다. 아래 for 문에서 device가 0이 압도적으로 많다. 
 또한 하나의 서버에서 2개 이상의 DDP를 돌리지 말자. 왜인지는 모르겠으나 이미 돌아가는 코드가 종료됨.
+
+가나다\
+가나다\
+
+qwe\
+\
+qwe
+
+asd
+\
+\
+\
+\
+\
+asd
