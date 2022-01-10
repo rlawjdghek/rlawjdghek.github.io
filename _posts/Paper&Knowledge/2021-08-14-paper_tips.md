@@ -359,6 +359,8 @@ We can observe that visualized CAM is activated on face region, compared to \tex
 
 58. 숫자 천자리마다 쉼표 찍어주기
 
+59. \documentclass[sigconf,review,anonymous ]{acmart} latex에서 리뷰받을때 맨 처음에 사용하면 좋다. 저자에 anonymous author 뜨고 acknowledgement 적용이 안됨.
+
 ### 좋은 문장들
 
 #### Abstract
@@ -437,8 +439,10 @@ intermediate feature maps, attention map of a deeper or more complex teacher net
 through another teacher or intermediate network. [Data-Distortion Guided Self-Distillation for Deep Neural Networks.]
 => 왜 이런 생각을 하게 되었나. motivation 늘릴때 좋은 표현. 
 
+19. For dataset generation, we collected 294.713 frames from 178 videos filmed at 49 different locations, representing <u>rich backgrounds and diverse environments.</u>
+=> diverse라는 말이 자주 사용되는데 rich라는 표현도 좋은듯. [VFP290K: A large-scale benchmark dataset for vision-based fallen person detection.]
 
-#### Bzackground
+#### Background
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
 
