@@ -27,6 +27,11 @@ ICCV KD rebuttal 때 이미지넷 요청을 받았었는데 시간이 없어서 
 예를 들어 배치가 128이고 resnet101을 훈련시킨다고 하자. 속도의 향상, 또는 VRAM의 부족으로 인해 분산처리를 이용하여 훈련하려고 한다.
 서버 컴이 다 돌아가고 있어서 순서 설명은 GPU4개를 이용하는 것으로 설명하였고, 실제 코드는 헷갈림을 방지 (n_world 가 같지 않도록) 고려하기 위해 GPU는 4개중 0,1,3 3개를 이용하는 것으로
 구현하였다. 기준 GPU는 0. 
+**원래는 cmd창에서**
+```bash
+CUDA_VISIBLE_DEVICES=0,1,3 python ~~ 
+```
+**로 실행시키는 것이 더 확실하지만, 본 포스팅에서는 코드에 넣어주었다.**
 
 ### DataParallel
 1. 배치를 32씩 4개의 GPU에 할당한다. 
@@ -51,7 +56,7 @@ import time
 
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,3"  # cmd에서 사용하자. 이거는 코드상으로 보여주기용
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--local_rank", default=0, type=int)
@@ -609,8 +614,13 @@ if __name__ == "__main__":
 torch.cuda.set_device가 필수로 들어가야한다. 이거 없으면 nvidia-smi 명령어에서 볼 수 있듯, 0번 GPU에 8개가 추가로 들어간다. 아래 for 문에서 device가 0이 압도적으로 많다. 
 또한 하나의 서버에서 2개 이상의 DDP를 돌리지 말자. 왜인지는 모르겠으나 이미 돌아가는 코드가 종료됨.
 
-가나다\
-가나다\
+가나다
+\
+\
+\
+\
+\
+가나다
 
 qwe\
 \
