@@ -442,6 +442,14 @@ through another teacher or intermediate network. [Data-Distortion Guided Self-Di
 19. For dataset generation, we collected 294.713 frames from 178 videos filmed at 49 different locations, representing <u>rich backgrounds and diverse environments.</u>
 => diverse라는 말이 자주 사용되는데 rich라는 표현도 좋은듯. [VFP290K: A large-scale benchmark dataset for vision-based fallen person detection.]
 
+20. There are, therefore, <u>significant efforts underway</u> to develop forensic techniques to detect synthesized or manipulated audio, image, and video recordings. [Evading Deepfake-Image Detectors with
+White- and Black Box Attacks.]
+=> underway는 진행중인이라는 형용사인데 efforts 뒤에 사용되었다. 어떤 문제를 해결하기 위해 진행되는 노력들을 나타낼 때 좋은 표현인듯. 
+
+21. These face GANs <u>are capable of</u> generating faithful faces with a high degree of variability, and thereby providing rich and diverse priors such as geometry, facial textures and colors,
+making it possible to jointly restore facial details and enhance colors. [Towards Real-World Blind Face Restoration with Genrative Facial Prior.]
+=> ~ 할 수 있다는 표현을 be capable of 로 사용. 명사가 오면 capable of로 사용한다.
+
 #### Background
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
@@ -484,6 +492,9 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 
 6. In the following section we display the practical benefits of our new algorithm, and we provide an <u>in-depth</u> comparison of its behaviour and that of traditional GANs. [WGAN]
 => in-depth는 심도있게라는 표현. extentional experiment라는 표현이 진부할때 사용하면 좋을듯.
+
+7. After that, the modulation is <u>is carried out</u> by scaling and shifting the GAN features.[Towards Real-World Blind Face Restoration with Genrative Facial Prior.]
+=> carry out이라는 표현을 conduct대신에 사용하면 좋을듯 
 
 #### Experimental Results
 
