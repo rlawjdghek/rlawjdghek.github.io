@@ -450,6 +450,10 @@ White- and Black Box Attacks.]
 making it possible to jointly restore facial details and enhance colors. [Towards Real-World Blind Face Restoration with Genrative Facial Prior.]
 => ~ 할 수 있다는 표현을 be capable of 로 사용. 명사가 오면 capable of로 사용한다.
 
+22. AdaConv can replace AdaIN in virtually every application where <u>the latter</u> has been adopted, providing a new, generic building block in CNN-based image generation and style manipulation. 
+[Adaptive Convolitions for Structure-Aware Style Transfer]
+=> 같은 단어 2번 반복 막기
+
 #### Background
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
