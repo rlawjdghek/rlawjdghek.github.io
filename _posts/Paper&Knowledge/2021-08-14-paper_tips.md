@@ -479,7 +479,7 @@ CE loss subject to labelled training data. [Knowledge Distillation by On-the-Fly
 7. These representations could then be fine-tuned with a few labels for a supervised <u>downstream</u> task. [A self supervised styleGAN for classification with extremely limited annotations] 
 => 어떤 큰 범주의 하위 집단 task를 표현할 때 좋은듯. 여기서는 supervise task의 한 원소로 few shot learning을 설명함. 
 
-
+  
 #### Methods
 
 1. <u>In what follows</u>, we first describe the details of the synthetic datasets and the real-world datasets, and then <u>elaborate</u> on the included algorithms. [Revisiting time series outlier detection: definitions and benchmarks.]
