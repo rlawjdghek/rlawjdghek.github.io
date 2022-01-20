@@ -500,6 +500,9 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 7. After that, the modulation is <u>is carried out</u> by scaling and shifting the GAN features.[Towards Real-World Blind Face Restoration with Genrative Facial Prior.]
 => carry out이라는 표현을 conduct대신에 사용하면 좋을듯 
 
+8. Therefore, we can observe that the classes within the same super-class makes squares along the diagonal-region demonstrating high correlation. [동근님 문장]
+=> 20개의 super-class, 각각의 super-class마다 5개의 sub-class를 가진 CIFAR100에서 pearson correlation을 그리면 같은 super-class에 속한 클래스들이 높은 상관관계를 보이면서 대각선에 정사각형이 생기는데 이를 표현한 문장. 
+
 #### Experimental Results
 
 1. Due to the space limitation, the detailed benchmark results of synthetic datasets <u>are tabulated</u> in Appendix D. [Revisiting time series outlier detection: definitions and benchmarks.]
