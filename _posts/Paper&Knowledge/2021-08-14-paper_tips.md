@@ -454,6 +454,10 @@ making it possible to jointly restore facial details and enhance colors. [Toward
 [Adaptive Convolitions for Structure-Aware Style Transfer]
 => 같은 단어 2번 반복 막기
 
+23. To counter its computational expense, we also propose executing all regularizations less frequently, observing that this can be done without <u>compromising</u> effectiveness. [Analyzing and Improving the 
+Image Quality of StyleGAN]
+=> compromise는 사전에서 타협하다라는 뜻으로 많이 쓰이는데 여기서는 손상시키다 라는 뜻으로 쓰였다. 나중에 performance decrease 같은단어 진부할때 사용.
+
 #### Background
 
 1. Figure.3 illustrates the thress types of outliers that often serve as a <u>de-facto-standard</u>: [Revisiting time series outlier detection: definitions and benchmarks.]
