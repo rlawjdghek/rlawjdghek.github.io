@@ -530,6 +530,8 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 1. <u>Given that existing information extraction systems for radiology reports often suffer from a lack of report coverage,</u> we measure the number of tokens and sentances in report sections covered by our schema.
  [RadGraph: Extracting Clinical Entities and Relations from Radiology Reports.]
 
+2. For future work, we plan to extend our research for different medical multimedia data and apply other anonymization methods, such as differential privacy, which we did not formally consider.
+[PTD: Privacy-Preserving Human Face Processing Framework using Tensor Decomposition]
 
 
 
