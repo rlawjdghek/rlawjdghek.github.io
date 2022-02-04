@@ -318,6 +318,58 @@ for epoch in range(1, args.n_epochs+1):
 ```
 이 코드를 실행시키면 마스터 프로세스 (local rank=0)일 때에만 모델을 저장하고, 각 에폭에서 모델이 저장되기 전까지 dist.barrier()에 의하여 다른 하위 프로세스들은 load_state_dict 이전까지 멈춰있는다. 
 즉, print 출력문에서 epoch 다음에 반드시 0 "model save" 이후에 "model load"가 뜬다.
+<br/>
+<br/>
+두가지의 코드가 있다. 첫번째는 먼저 G를 초기화 한다음에 각 cuda에 따라 로드를 하고 DDP로 씌운 것이고, 두번째는 DDP로 씌운 다음에 각모델을 load한 것이다. 결론적으로는 두번째가 더 빠르다. DDP를 짤때 모델을 먼저 초기화 하고
+DDP 씌운다음에 체크포인트 로드를 하자.
+```python
+import torch
+import torch.distributed as dist
+import argparse
+import time
+
+from models.networks import Generator
+start_time = time.time()
+parser = argparse.ArgumentParser()
+parser.add_argument("--local_rank", type=int, default=0)
+args = parser.parse_args()
+
+torch.cuda.set_device(args.local_rank)
+dist.init_process_group(backend="nccl", world_size=4, rank=args.local_rank)
+print("after init process group")
+
+G = Generator(1024, 100, 8).cuda(args.local_rank)
+print("model initialize")
+cp = torch.load("./test_cp.pth", map_location={"cuda:0":f"cuda:{args.local_rank}"})
+G.load_state_dict(cp)
+G = torch.nn.parallel.DistributedDataParallel(G, device_ids=[args.local_rank], output_device=args.local_rank)
+print("model ddp")
+print(time.time() - start_time)
+```
+```python
+import torch
+import torch.distributed as dist
+import argparse
+import time
+
+from models.networks import Generator
+start_time = time.time()
+parser = argparse.ArgumentParser()
+parser.add_argument("--local_rank", type=int, default=0)
+args = parser.parse_args()
+
+torch.cuda.set_device(args.local_rank)
+dist.init_process_group(backend="nccl", world_size=4, rank=args.local_rank)
+print("after init process group")
+
+G = Generator(1024, 100, 8).cuda(args.local_rank)
+print("model initialize")
+G = torch.nn.parallel.DistributedDataParallel(G, device_ids=[args.local_rank], output_device=args.local_rank)
+cp = torch.load("./test_cp.pth", map_location={"cuda:0":f"cuda:{args.local_rank}"})
+G.module.load_state_dict(cp)
+print("model ddp")
+print(time.time() - start_time)
+```
 ![](/assets/images/2021-07-07-DataParallel/6.JPG)
 <br/>
 <br/>
