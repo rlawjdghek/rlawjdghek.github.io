@@ -127,6 +127,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python -m torch.distributed.launch --nproc_per_node
 CUDA_VISIBLE_DEVICES=0,1,2,3 python -m torch.distributed.launch --nproc_per_node 4 --master_port 1234 main.py ~~
 ```
 각 GPU마다 프로세스가 독립적으로 생성되어 돌아간다고 생각하자.
+
 ```python
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,3"
@@ -141,13 +142,13 @@ import torchvision.transforms as T
 from torch.cuda.amp import GradScaler, autocast
 
 parser = argparse.ArgumentParser()
-#### training ####
+#### train & test ###
 parser.add_argument("--batch_size", type=int, default=128)
 parser.add_argument("--n_workers", type=int, default=4)
 parser.add_argument("--lr", type=float, default=0.01)
 parser.add_argument("--n_epochs", type=int, default=100)
 
-#### configs ####
+#### config ####
 parser.add_argument("--local_rank", type=int, default=0)
 parser.add_argument("--world_size", type=int)
 parser.add_argument("--DDP_backend", type=str, default="nccl")
@@ -206,6 +207,60 @@ for epoch in range(1, args.n_epochs+1):
 
 결과를 보면 아까와 달리 전부다 같은 양의 메모리를 차지하는 것을 볼 수 있다. 하지만 PID는 모두 다르다.
  즉, 개별적으로 실행되고 있는 코드들이다. 아까보다 훨씬 더 많은 메모리를 차지하는 것을 볼 수 있다. 
+
+### 최신 DistributedDataparallel 
+pytorch 1.10이후로는 torchrun을 활용하자. .cuda(local_rank)를 써야 한다. .cuda()만 사용하면 0번 GPU에만 들어감. 또한 world_size도 아직은 명시를 안해도 되므로 생략하자. torchrun을 활용하면 아래 코드를 명령어
+```bash
+CUDA_VISIBLE_DEVICES=0,1,3 torchrun --nproc_per_node 3 dummy.py
+```
+로 실행할 수 있다. 
+
+```python
+import os
+local_rank=int(os.environ["LOCAL_RANK"])
+import torch
+import torch.distributed as dist
+from torch.utils.data.distributed import DistributedSampler
+import torchvision.transforms as T
+from torch.utils.data import DataLoader
+from torchvision.models import resnet18
+from torchvision.datasets import CIFAR100
+
+from utils import AverageMeter, Accuracy
+dist.init_process_group(backend="nccl")
+transforms = T.Compose([
+    T.ToTensor()
+])
+
+train_dataset = CIFAR100(root="/home/data", train=True, transform=transforms)
+train_sampler = DistributedSampler(train_dataset, shuffle=True)
+train_loader = DataLoader(train_dataset, batch_size=128,sampler=train_sampler)
+
+model = resnet18(num_classes=100).cuda(local_rank)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+criterion_CE = torch.nn.CrossEntropyLoss()
+for epoch in range(100):
+    top1_acc = AverageMeter()
+    for img, label in train_loader:
+        img = img.cuda(local_rank)
+        label = label.cuda(local_rank)
+        output = model(img)
+        loss = criterion_CE(output, label)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        top1, top5 = Accuracy(output, label, topk=(1,5))
+        top1_acc.update(top1, img.shape[0])
+    if local_rank == 0:
+        print(top1_acc.avg)
+```
+
+주의할 사항은
+1. local rank를 더이상 argparse로 받지 않는다는것
+2. 따라서 다른 함수 등에서 사용할 때에는 args에 애초에 넣는다던가 그렇게 하자.
+
+
 <br/>
 <br/>
 ### DistributedDataparallel의 모델 save
@@ -322,6 +377,7 @@ for epoch in range(1, args.n_epochs+1):
 <br/>
 두가지의 코드가 있다. 첫번째는 먼저 G를 초기화 한다음에 각 cuda에 따라 로드를 하고 DDP로 씌운 것이고, 두번째는 DDP로 씌운 다음에 각모델을 load한 것이다. 결론적으로는 두번째가 더 빠르다. DDP를 짤때 모델을 먼저 초기화 하고
 DDP 씌운다음에 체크포인트 로드를 하자.
+
 ```python
 import torch
 import torch.distributed as dist
