@@ -209,11 +209,12 @@ for epoch in range(1, args.n_epochs+1):
  즉, 개별적으로 실행되고 있는 코드들이다. 아까보다 훨씬 더 많은 메모리를 차지하는 것을 볼 수 있다. 
 
 ### 최신 DistributedDataparallel 
-pytorch 1.10이후로는 torchrun을 활용하자. .cuda(local_rank)를 써야 한다. .cuda()만 사용하면 0번 GPU에만 들어감. 또한 world_size도 아직은 명시를 안해도 되므로 생략하자. torchrun을 활용하면 아래 코드를 명령어
+pytorch 1.10이후로는 torchrun을 활용하자. .cuda(local_rank)를 써야 한다. .cuda()만 사용하면 0번 GPU에만 들어감. torchrun을 활용하면 아래 코드를 명령어
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,3 torchrun --nproc_per_node 3 dummy.py
 ```
 로 실행할 수 있다. 
+**world_size는 torch.distributed.get_world_size()로 받을 수 있다. 마찬가지로 local rank도 torch.distributed.get_rank()로 받을 수 있다.**
 
 ```python
 import os
