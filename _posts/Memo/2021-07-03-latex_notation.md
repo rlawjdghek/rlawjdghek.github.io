@@ -23,3 +23,5 @@ last_modified_at: 2021-07-02T14:48:00-05:00
 ![](/assets/images/2021-07-03-latex_notation/7.JPG)
 ![](/assets/images/2021-07-03-latex_notation/8.JPG)
 ![](/assets/images/2021-07-03-latex_notation/9.JPG)
+
+2022-03-06 : a프라임을 사용할 땐, $a^{\prime}$
