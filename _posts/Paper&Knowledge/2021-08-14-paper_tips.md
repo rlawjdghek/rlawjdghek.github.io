@@ -528,6 +528,9 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 6. Even at the end of the training, as Figure 7h, the heatmap of EE + triplet loss still contains <u>a greater number of hard negative pairs than triplet loss does.</u> [Embedding Expansion: Augmentation in Embeggin Space for Deep Metric Learning]
 => than 이후에 명사가 아닌 구가 온다. 비교하는 문장 적을때 사용하면 좋을듯.
 
+7. Error decreases our proposed techniques <u>superimpose</u> over on another.
+=> ablation같은데서 우리가 제시한 방법론이 한개씩 겹쳐지는 것을 표현하기 위해 superimpose라는 단어를 사용.
+
 
 #### Discussion
 
