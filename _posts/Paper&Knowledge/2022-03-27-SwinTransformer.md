@@ -114,6 +114,7 @@ class PatchMerging(nn.Module):  # [BS x H*W x C] => [BS x H//2 x W//2 x 4C]
 ```
 입력을 [BS x H x W x C]로 reshape한 뒤, 아래 그림처럼 H//2, W//2크기의 feature map 4개로 나눈다. 
 ![](/assets/images/2022-03-27-SwinTransformer/2.PNG)
+
 그 다음 채널을 기준으로 concatenation 하는데, 이러면 채널이 4배로 늘어나므로 다시 C로 reduction 해준다. 이로 인하여 [BS x H x W x C] => [BS x H//2 x W//2 x C]로 해상도를 4배 낮출수 있다. 
 
 #### Architecture variants
