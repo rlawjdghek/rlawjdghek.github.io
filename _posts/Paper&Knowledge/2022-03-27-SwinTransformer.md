@@ -126,6 +126,7 @@ ViT보다 훨씬 더 가벼우면서 좋은 성능을 자랑한다.
 새롭게 제시된 swin transformer는 여러 비전 task에서 우수한 성능을 보인다는 것을 입증하기 위하여 본 논문에서는 컴퓨터 비전의 대표적인 task 3개, image classification, object detection, segmentation에 
 대하여 기존 모델들과 비교한다. 
 ![](/assets/images/2022-03-27-SwinTransformer/5.PNG)
+
 위의 이미지넷 결과에서 볼 수 있듯이, 기존 ViT는 86M, 307M의 파라미터를 가지지만, Swin-T 같은 경우 파라미터는 3배이상, FLOPs는 10배 이상 효율적이다. 또한 성능도 80대를 넘는 것을 보여준다. 즉, 이미지넷에서 기존 CNN과 
 대등한 모델의 연산량을 갖고, 성능도 우수한 Transformer를 최초로 제시하였다. 
 
