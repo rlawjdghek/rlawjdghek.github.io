@@ -22,7 +22,8 @@ last_modified_at: 2022-04-01T15:04:00-05:00
 TransGAN은 1024이미지의 생성을 하지 않았다. 직접 구현해본 바로는 swin transformer를 활용해도 1024이미지까지에서는 불가능한듯. 이 논문은 StyleGAN2를 swin transformer로 완성한 논문이다. TransGAN은 swin transformer
 이후 처음 GAN을 트랜스포머를 활용하여 만들었다면, 이 논문은 트랜스포머를 활용한 GAN이 CNN보다 더 좋아질 수 있다는 것을 보여준다. 중간에 double attention이 나오면서 구현상에 swin transformer와 다른점이 있다. 자세히 말하면,
 swin transformer에서는 window partition을 먼저 진행한 다음에 qkv레이어를 통과하여 qkv를 만들지만, 여기서는 먼저 채널을 2로 나누어야 하기 떄문에 qkv레이어를 통과한 뒤, 각각의 qkv를 window partition한다. 하지만 둘 다 결과는 
-같다. 단지 double attention을 강조하기 위하여 이렇게 구현한듯. 또한 TransGAN에서는 pixelshuffle을 활용하여 채널을 줄였지만, 여기서는 StyleSwinBlock 다음의 bilinear에 linear로 2씩 줄인다.
+같다. 단지 double attention을 강조하기 위하여 이렇게 구현한듯. 또한 TransGAN에서는 pixelshuffle을 활용하여 채널을 줄였지만, 여기서는 StyleSwinBlock 다음의 bilinear에 linear로 2씩 줄인다. 
+구현은 [링크](https://github.com/rlawjdghek/GANs/tree/master/StyleSwin) 참조.
 
 ### Abstract & Introduction
 local attention이 트랜스포머 기반 생성모델에서는 필수적이다. 하지만 이는 비용이 상당하기 때문에 현재 있는 자원으로는 조절하여 사용해야 한다고 한다. local attention은 CNN에서와 같이 local inductive bias를 

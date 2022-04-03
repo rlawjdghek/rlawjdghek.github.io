@@ -16,7 +16,7 @@ use_math: true
 last_modified_at: 2022-03-27T15:04:00-05:00
 ---
 
-StyleGAN2를 트랜스포머로 구현한 StyleSwin을 공부하기 전 베이스가 된 논문. 내 구현은 [링크](https://github.com/rlawjdghek/Swin-Transformer) 참조. 
+StyleGAN2를 트랜스포머로 구현한 StyleSwin을 공부하기 전 베이스가 된 논문. 내 구현은 [링크](https://github.com/rlawjdghek/GANs/tree/master/Swin%20Transformer) 참조. 
 구현해보고나니 이전에 리뷰한 TransGAN에서 이 모델을 거의 차용했었다. 하지만 TransGAN은 swin transformer를 크게 언급하지 않았음. Transformer의 유일한 단점인 parameter수를 조절하고,
 패치간의 merging을 통하여 더 넓은 receptive field를 가지게 하였다.
 
