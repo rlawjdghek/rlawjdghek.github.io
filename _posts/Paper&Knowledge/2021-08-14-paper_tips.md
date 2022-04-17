@@ -531,6 +531,8 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 7. Error decreases our proposed techniques <u>superimpose</u> over on another.
 => ablation같은데서 우리가 제시한 방법론이 한개씩 겹쳐지는 것을 표현하기 위해 superimpose라는 단어를 사용.
 
+8. In contrast, as demonstrated in the attacker scenario, the fake images pre-processed by our method successfully evade the detector, <u>dropping accuracy to 0.5499, 0.6182, and 0.5717 for each GAN-based method.</u> [Under review].
+=> 정확도가 몇에서 떨어질때 이런 표현 사용하면 좋은듯. 
 
 #### Discussion
 
