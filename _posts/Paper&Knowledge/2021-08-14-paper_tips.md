@@ -511,6 +511,9 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 9. Therefore, Eq.3 is <u>simplified</u> as follows: [교수님 문장]
 => 이 문장에서는 주어진 3번 식이 follows 단어 다음 식으로 유도되는 것을 의미하는데, 의미에 따라 simplified라는 단어로 사용하도록 하자. defined는 새로운것을 제시할때나 진리를 적을 때 쓰자.
 
+10. Interestingly, <u>through systematic evaluations</u>, we find that using internal patches only outperforms using external patches. [Contrastive Learning for Unpaired Image-to-Image Translation.]
+=> extensive experiment보다 그냥 돌려서 비교한 것이므로 systematic evaluation이 적합한듯.
+
 #### Experimental Results
 
 1. Due to the space limitation, the detailed benchmark results of synthetic datasets <u>are tabulated</u> in Appendix D. [Revisiting time series outlier detection: definitions and benchmarks.]
