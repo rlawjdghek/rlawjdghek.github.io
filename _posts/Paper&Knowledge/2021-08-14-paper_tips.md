@@ -537,6 +537,10 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 8. In contrast, as demonstrated in the attacker scenario, the fake images pre-processed by our method successfully evade the detector, <u>dropping accuracy to 0.5499, 0.6182, and 0.5717 for each GAN-based method.</u> [Under review].
 => 정확도가 몇에서 떨어질때 이런 표현 사용하면 좋은듯. 
 
+9. Moreover, in the VGG family as teacher networks, there are marginal performance improvements in the three smallest models, VGG8, VGG11, and VGG13, 
+but <u>a gradual decrease in the performance of the teacher network as the capacity increases.</u> [IMF]
+=> ~할수록 ~는 ~하다. 여기서는 teacher의 크기가 올라갈수록 성능은 떨어진다는 말을 하는데, more and more은 동화에서 나오는 표현이라고 함. as를 활용하자.
+
 #### Discussion
 
 1. <u>Given that existing information extraction systems for radiology reports often suffer from a lack of report coverage,</u> we measure the number of tokens and sentances in report sections covered by our schema.
