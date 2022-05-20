@@ -514,6 +514,7 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 10. Interestingly, <u>through systematic evaluations</u>, we find that using internal patches only outperforms using external patches. [Contrastive Learning for Unpaired Image-to-Image Translation.]
 => extensive experiment보다 그냥 돌려서 비교한 것이므로 systematic evaluation이 적합한듯.
 
+
 #### Experimental Results
 
 1. Due to the space limitation, the detailed benchmark results of synthetic datasets <u>are tabulated</u> in Appendix D. [Revisiting time series outlier detection: definitions and benchmarks.]
