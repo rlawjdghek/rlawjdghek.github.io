@@ -507,7 +507,7 @@ $f$ is a neural network parameterized by $\theta$. [Embedding Expansion: Augment
 
 8. Therefore, we can observe that the classes within the same super-class makes squares along the diagonal-region demonstrating high correlation. [동근님 문장]
 => 20개의 super-class, 각각의 super-class마다 5개의 sub-class를 가진 CIFAR100에서 pearson correlation을 그리면 같은 super-class에 속한 클래스들이 높은 상관관계를 보이면서 대각선에 정사각형이 생기는데 이를 표현한 문장. 
-
+e
 9. Therefore, Eq.3 is <u>simplified</u> as follows: [교수님 문장]
 => 이 문장에서는 주어진 3번 식이 follows 단어 다음 식으로 유도되는 것을 의미하는데, 의미에 따라 simplified라는 단어로 사용하도록 하자. defined는 새로운것을 제시할때나 진리를 적을 때 쓰자.
 
