@@ -35,7 +35,7 @@ local structure (지역적인 부분에서 물체의 shape)으로 나눌 수 있
 2. texture synthesizer : 1번 아키텍쳐에서 전체적인 구상을 latent화 했다면, 이 아키텍쳐에서는 이를 입력으로 받아 다양한 texture를 고려한 뒤 실제 이미지를 생성한다. 
 
 
-[](/assets/images/2022-05-23-InfinityGAN/1.JPG)
+![](/assets/images/2022-05-23-InfinityGAN/1.JPG)
 # Method 
 위에서 언급하였듯이, 이미지는 global정보와 local정보를 갖는다. <br/>
 먼저 global 정보는 본 논문에서 자주 사용하는, holistic appearance가 이미지 전반적으로 일관성 있어야 한다. global 정보는 무한의 크기 이미지 모두 일치해야 하기 때문에
