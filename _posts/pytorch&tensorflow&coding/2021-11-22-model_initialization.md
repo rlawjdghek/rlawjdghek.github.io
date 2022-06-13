@@ -16,7 +16,7 @@ use_math: true
 last_modified_at: 2021-11-22T15:04:00-05:00
 ---
 
-
+예전에는 GAN 학습시킬때 이거 많이 사용했는데 지금은 아래의 He_initialization이 return이 없어서 더 깔끔하다. model.apply(he_init)
 ```python
 from torch.nn import init
 def init_weight(model, init_type="normal", init_gain=0.02):
@@ -40,4 +40,16 @@ def init_weight(model, init_type="normal", init_gain=0.02):
             init.constant_(m.bias.data, 0.0)
     model.apply(init_func)
     return model
+```
+
+```python
+def he_init(module):
+    if isinstance(module, nn.Conv2d):
+        nn.init.kaiming_normal_(module.weight, mode='fan_in', nonlinearity='relu')
+        if module.bias is not None:
+            nn.init.constant_(module.bias, 0)
+    if isinstance(module, nn.Linear):
+        nn.init.kaiming_normal_(module.weight, mode='fan_in', nonlinearity='relu')
+        if module.bias is not None:
+            nn.init.constant_(module.bias, 0)
 ```
