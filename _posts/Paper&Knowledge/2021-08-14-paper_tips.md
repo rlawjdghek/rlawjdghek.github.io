@@ -542,6 +542,9 @@ e
 but <u>a gradual decrease in the performance of the teacher network as the capacity increases.</u> [IMF]
 => ~할수록 ~는 ~하다. 여기서는 teacher의 크기가 올라갈수록 성능은 떨어진다는 말을 하는데, more and more은 동화에서 나오는 표현이라고 함. as를 활용하자.
 
+10. In particular, we expect TimeGAN to <u>excel in<\u> capturing conditional distributions over time. [TimeGAN]
+=> excel in : ~에 뛰어나다. 
+
 #### Discussion
 
 1. <u>Given that existing information extraction systems for radiology reports often suffer from a lack of report coverage,</u> we measure the number of tokens and sentances in report sections covered by our schema.
