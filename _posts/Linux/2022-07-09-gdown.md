@@ -7,7 +7,7 @@ categories:
 tags:
   - Linux
  
-published: False
+published: True
 toc: true
 toc_sticky: true
 toc_label: "On this page"
